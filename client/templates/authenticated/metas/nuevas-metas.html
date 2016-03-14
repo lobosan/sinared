@@ -1,0 +1,63 @@
+<template name="nuevasMetas">
+  {{#if Template.subscriptionsReady}}
+    <div class="row animated fadeIn">
+      <div class="col-xs-12">
+        <div class="card card-top-buffer">
+          <div class="card-body">
+            {{#autoForm collection='Metas' id='insertMetasForm' type='insert'}}
+              <div class="row">
+                <div class="col-md-2">{{> afQuickField name='anio'}}</div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">{{> afQuickField name='zonaID'}}</div>
+                <div class="col-md-10">{{> afQuickField name='provinciaID'}}</div>
+              </div>
+              <fieldset class="custom-fieldset">
+                <legend class="custom-legend">CIALCOs</legend>
+                <div class="row">
+                  <div class="col-md-4">{{> afQuickField name='cialcoPrimerCuatrimestre'}}</div>
+                  <div class="col-md-4">{{> afQuickField name='cialcoSegundoCuatrimestre'}}</div>
+                  <div class="col-md-4">{{> afQuickField name='cialcoTercerCuatrimestre'}}</div>
+                </div>
+              </fieldset>
+              <fieldset class="custom-fieldset">
+                <legend class="custom-legend">Organizaciones</legend>
+                <div class="row">
+                  <div class="col-md-4">{{> afQuickField name='organizacionesPrimerCuatrimestre'}}</div>
+                  <div class="col-md-4">{{> afQuickField name='organizacionesSegundoCuatrimestre'}}</div>
+                  <div class="col-md-4">{{> afQuickField name='organizacionesTercerCuatrimestre'}}</div>
+                </div>
+              </fieldset>
+              <fieldset class="custom-fieldset">
+                <legend class="custom-legend">Redes</legend>
+                <div class="row">
+                  <div class="col-md-4">{{> afQuickField name='redesPrimerCuatrimestre'}}</div>
+                  <div class="col-md-4">{{> afQuickField name='redesSegundoCuatrimestre'}}</div>
+                  <div class="col-md-4">{{> afQuickField name='redesTercerCuatrimestre'}}</div>
+                </div>
+              </fieldset>
+              <fieldset class="custom-fieldset">
+                <legend class="custom-legend">Productores</legend>
+                <div class="row">
+                  <div class="col-md-4">{{> afQuickField name='productoresPrimerCuatrimestre'}}</div>
+                  <div class="col-md-4">{{> afQuickField name='productoresSegundoCuatrimestre'}}</div>
+                  <div class="col-md-4">{{> afQuickField name='productoresTercerCuatrimestre'}}</div>
+                </div>
+              </fieldset>
+              <fieldset class="custom-fieldset">
+                <legend class="custom-legend">Montos de venta</legend>
+                <div class="row">
+                  <div class="col-md-4">{{> afQuickField name='montoVentasPrimerSemestre'}}</div>
+                  <div class="col-md-4">{{> afQuickField name='montoVentasSegundoSemestre'}}</div>
+                </div>
+              </fieldset>
+              <button type='submit' class='btn btn-success'>GUARDAR</button>
+            {{/autoForm}}
+          </div>
+        </div>
+      </div>
+    </div>
+  {{else}}
+    {{> spinner}}
+  {{/if}}
+</template>

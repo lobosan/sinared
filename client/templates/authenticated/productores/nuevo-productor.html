@@ -1,0 +1,64 @@
+<template name="nuevoProductor">
+  {{#if Template.subscriptionsReady}}
+    {{> modalCialco}}
+    {{> modalOrganizacion}}
+    <div class="row animated fadeIn">
+      <div class="col-xs-12">
+        <div class="card card-top-buffer">
+          <div class="card-body">
+            {{#autoForm collection='Productores' id='insertProductorForm' type='insert'}}
+              <div class="row">
+                <div class="col-md-2">{{> afQuickField name='anio'}}</div>
+                <div class="col-md-3">{{> afQuickField name='cuatrimestre'}}</div>
+              </div>
+              <fieldset class="custom-fieldset">
+                <legend class="custom-legend">Ubicación</legend>
+                {{> afQuickField name='zonaID'}}
+                {{> afQuickField name='provinciaID'}}
+                {{> afQuickField name='cantonID'}}
+                {{> afQuickField name='parroquiaID'}}
+              </fieldset>
+              <fieldset class="custom-fieldset">
+                <legend class="custom-legend">Datos personales</legend>
+                <div class="row">
+                  <div class="col-md-2">{{> afQuickField name='cedula'}}</div>
+                  <div class="col-md-5">{{> afQuickField name='apellidos'}}</div>
+                  <div class="col-md-5">{{> afQuickField name='nombres'}}</div>
+                </div>
+                <div class="row">
+                  <div class="col-md-2">{{> afQuickField name='edad'}}</div>
+                  <div class="col-md-2">{{> afQuickField name='sexo'}}</div>
+                  <div class="col-md-8">{{> afQuickField name='estadoCivil'}}</div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">{{> afQuickField name='telefonoFijoContacto'}}</div>
+                  <div class="col-md-4">{{> afQuickField name='celularContacto'}}</div>
+                  <div class="col-md-4">{{> afQuickField name='emailContacto'}}</div>
+                </div>
+              </fieldset>
+              <div class="input-group select2-bootstrap-append">
+                {{> afQuickField name='cialcos'}}
+                <span class="input-group-btn s2m-add">
+                    <button class="btn btn-default" type="button" data-toggle="modal" data-target="#nuevo-cialco">
+                      <span class="fa fa-plus"></span>
+                    </button>
+                  </span>
+              </div>
+              <div class="input-group select2-bootstrap-append">
+                {{> afQuickField name='organizaciones'}}
+                <span class="input-group-btn s2m-add">
+                    <button class="btn btn-default" type="button" data-toggle="modal" data-target="#nueva-organizacion">
+                      <span class="fa fa-plus"></span>
+                    </button>
+                  </span>
+              </div>
+              <button type='submit' class='btn btn-success'>GUARDAR</button>
+            {{/autoForm}}
+          </div>
+        </div>
+      </div>
+    </div>
+  {{else}}
+    {{> spinner}}
+  {{/if}}
+</template>

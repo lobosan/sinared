@@ -1,0 +1,73 @@
+<template name="reporteCialcos">
+  {{#if Template.subscriptionsReady}}
+    <div class="row animated fadeIn">
+      <div class="col-xs-12">
+        <div class="card card-top-buffer">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-4">
+                {{#with tablaReporteCialcos}}
+                  <table class="table table-bordered table-striped animated fadeIn">
+                    <thead>
+                    <tr>
+                      <th>MODALIDAD</th>
+                      <th class="text-center">CANTIDAD</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td>FERIA</td>
+                      <td class="text-center">{{this.feria}}</td>
+                    </tr>
+                    <tr>
+                      <td>CANASTA</td>
+                      <td class="text-center">{{this.canasta}}</td>
+                    </tr>
+                    <tr>
+                      <td>PIE DE FINCA</td>
+                      <td class="text-center">{{this.pieDeFinca}}</td>
+                    </tr>
+                    <tr>
+                      <td>TIENDA</td>
+                      <td class="text-center">{{this.tienda}}</td>
+                    </tr>
+                    <tr>
+                      <td>COMPRA PÚBLICA</td>
+                      <td class="text-center">{{this.compraPublica}}</td>
+                    </tr>
+                    <tr>
+                      <td>EXPORTACIÓN CAMPESINA</td>
+                      <td class="text-center">{{this.exportacionCampesina}}</td>
+                    </tr>
+                    <tr>
+                      <td>ABASTECIMIENTO A PEQUEÑAS INDUSTRIAS</td>
+                      <td class="text-center">{{this.abastecimientoPequenasIndustrias}}</td>
+                    </tr>
+                    <tr>
+                      <td>CATERING/RESTAURANTES</td>
+                      <td class="text-center">{{this.cateringRestaurantes}}</td>
+                    </tr>
+                    <tr>
+                      <td>OTRO</td>
+                      <td class="text-center">{{this.otro}}</td>
+                    </tr>
+                    <tr class="warning">
+                      <th class="text-right">TOTAL</th>
+                      <td class="text-center">{{this.totalCialcos}}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                {{/with}}
+              </div>
+              <div class="col-md-8">
+                <div id="reporte-cialcos">{{reporteCialcos}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {{else}}
+    {{> spinner}}
+  {{/if}}
+</template>

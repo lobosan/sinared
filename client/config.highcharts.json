@@ -1,0 +1,11 @@
+{
+  "version": "4.2.1",
+  "base": "highcharts.src.js",
+  "adapter": "default",
+  "modules": [
+    "modules/exporting.js",
+    "modules/heatmap.js",
+    "modules/drilldown.js",
+    "themes/grid-light.js"
+  ]
+}

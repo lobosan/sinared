@@ -1,0 +1,30 @@
+<template name="login">
+  <div class="row animated fadeIn">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
+      <div class="card card-top-buffer">
+        <div class="card-header">
+          <div class="card-title">
+            <div class="title pull-left">Inicio de sesión</div>
+            <div class="authentication-logo pull-right" title="SINARED"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <form id="login" class="login">
+            <div class="form-group">
+              <label for="emailAddress">Correo electrónico</label>
+              <input type="email" name="emailAddress" class="form-control" placeholder="Correo electrónico" autofocus>
+            </div>
+            <div class="form-group">
+              <label for="password"><span class="pull-left">Contraseña</span></label>
+              <input type="password" name="password" class="form-control" placeholder="Contraseña">
+            </div>
+            <div class="form-group">
+              <input type="submit" class="btn btn-success" value="Iniciar sesión">
+              <a class="pull-right login-top-buffer" href="{{pathFor 'recover-password'}}">Olvidó su contraseña?</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

@@ -1,0 +1,54 @@
+<template name="invite">
+  {{#if Template.subscriptionsReady}}
+    <div class="row animated fadeIn">
+      {{#with invitation}}
+        <div class="col-xs-12 col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
+          <div class="card card-top-buffer">
+            <div class="card-header">
+              <div class="card-title">
+                <div class="title pull-left">Aceptar invitación</div>
+                <div class="authentication-logo pull-right" title="SINARED"></div>
+              </div>
+            </div>
+            <div class="card-body">
+              <p class="alert alert-warning">Para aceptar la invitación y crear su cuenta de usuario, ingrese una nueva contraseña que deberá memorizarla y guardarla en un lugar seguro</p>
+              <form id="accept-invitation">
+                <div class="form-group">
+                  <label for="userName">Usuario</label>
+                  <input disabled name="userName" class="form-control" value="{{name}}">
+                </div>
+                <div class="form-group">
+                  <label for="emailAddress">Correo electrónico</label>
+                  <input disabled type="email" name="emailAddress" class="form-control" placeholder="Correo electrónico" value="{{email}}">
+                </div>
+                <div class="form-group">
+                  <label for="password"><span class="pull-left">Nueva contraseña</span></label>
+                  <input type="password" name="password" class="form-control" placeholder="Nueva contraseña">
+                </div>
+                <div class="form-group">
+                  <input type="submit" class="btn btn-success" value="Crear cuenta">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      {{else}}
+        <div class="col-xs-12 col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
+          <div class="card card-top-buffer">
+            <div class="card-header">
+              <div class="card-title">
+                <div class="title">Invitación no disponible</div>
+              </div>
+            </div>
+            <div class="card-body">
+              <p>Si usted ya aceptó la invitación previamente, ingrese al sistema con su contraseña a través de la dirección <a href="http://sinared.meteor.com">http://sinared.meteor.com</a>.</p>
+              <p>Caso contrario, el administrador del sistema ha cancelado su invitación</p>
+            </div>
+          </div>
+        </div>
+      {{/with}}
+    </div>
+  {{else}}
+    {{> spinner}}
+  {{/if}}
+</template>

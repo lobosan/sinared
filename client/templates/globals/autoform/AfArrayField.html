@@ -1,0 +1,33 @@
+<template name="afArrayField_customArrayOfObjects">
+  <label class="control-label">{{afFieldLabelText name=this.atts.name}}</label>
+  <div class="panel panel-default">
+    {{#if afFieldIsInvalid name=this.atts.name}}
+      <div class="panel-body has-error">
+        <span class="help-block">{{{afFieldMessage name=this.atts.name}}}</span>
+      </div>
+    {{/if}}
+    <ul class="list-group">
+      {{#afEachArrayItem name=this.atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount}}
+        <li class="list-group-item autoform-array-item">
+          <div>
+            <div class="autoform-remove-item-wrap">
+              {{#if afArrayFieldHasMoreThanMinimum name=../atts.name minCount=../atts.minCount maxCount=../atts.maxCount}}
+                <button type="button" class="btn btn-default autoform-remove-item"><span class="fa fa-minus"></span></button>
+              {{/if}}
+            </div>
+            <div class="autoform-array-item-body">
+              {{> afQuickField name=this.name label=false options=afOptionsFromSchema template="bootstrap3"}}
+            </div>
+          </div>
+        </li>
+      {{/afEachArrayItem}}
+      {{#if afArrayFieldHasLessThanMaximum name=this.atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount}}
+        <li class="list-group-item">
+          <button type="button" class="btn btn-default autoform-add-item" data-autoform-field="{{this.atts.name}}" data-autoform-minCount="{{this.atts.minCount}}" data-autoform-maxCount="{{this.atts.maxCount}}">
+            <span class="fa fa-plus"></span>
+          </button>
+        </li>
+      {{/if}}
+    </ul>
+  </div>
+</template>

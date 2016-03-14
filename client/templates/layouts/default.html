@@ -1,0 +1,13 @@
+<template name="default">
+  <div class="app-container">
+    <div class="row content-container">
+      {{> header}}
+      <div class="container-fluid">
+        <div class="side-body padding-top">
+          {{> bertAlert}}
+          {{> Template.dynamic template=yield}}
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

@@ -1,0 +1,92 @@
+<template name="users">
+  {{#if isInRole 'admin'}}
+    {{#if Template.subscriptionsReady}}
+      {{> sendInvitationModal}}
+      <div class="row animated fadeIn">
+        <div class="col-xs-12">
+          <div class="card card-top-buffer">
+            <div class="card-header">
+              <div class="card-title">
+                <div class="title">Usuarios</div>
+              </div>
+            </div>
+            <div class="card-body">
+              <table class="table table-bordered">
+                <thead>
+                <tr>
+                  <th>Usuario</th>
+                  <th>Correo electrónico</th>
+                  <th class="text-center">Rol</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each users}}
+                  <tr>
+                    <td class="text-left text-middle">{{profile.name}}</td>
+                    <td class="text-left text-middle">
+                      {{#if isCurrentUser _id}}
+                        <label class="label label-success">USTED!</label>{{/if}} {{emails.[0].address}}
+                    </td>
+                    <td>
+                      <select {{disableIfAdmin _id}} name="userRole" class="form-control">
+                        <option selected="{{selected roles.[0] 'admin'}}" value="admin">Administrador</option>
+                        <option selected="{{selected roles.[0] 'manager'}}" value="manager">Director zonal</option>
+                        <option selected="{{selected roles.[0] 'employee'}}" value="employee">Técnico provincial
+                        </option>
+                      </select>
+                    </td>
+                  </tr>
+                {{/each}}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row card-top-buffer animated fadeIn">
+        <div class="col-xs-12">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title pull-left">
+                <div class="title">Invitaciones</div>
+              </div>
+              <a class="btn btn-success pull-right btn-top-buffer" data-toggle="modal" data-target="#send-invitation-modal">Invitar usuario</a>
+            </div>
+            <div class="card-body">
+              {{#if hasInvitations}}
+                <table class="table table-bordered">
+                  <thead>
+                  <tr>
+                    <th>Usuario</th>
+                    <th>Correo electrónico</th>
+                    <th class="text-center">Tipo</th>
+                    <th class="text-center">Fecha de envío</th>
+                    <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {{#each invitations}}
+                    <tr>
+                      <td class="text-left text-middle">{{name}}</td>
+                      <td class="text-left text-middle">{{email}}</td>
+                      <td class="text-center text-middle">{{role}}</td>
+                      <td class="text-center text-middle">{{humanDate date}}</td>
+                      <td class="text-center">
+                        <button type="button" class="btn btn-danger revoke-invite">Revocar invitación</button>
+                      </td>
+                    </tr>
+                  {{/each}}
+                  </tbody>
+                </table>
+              {{else}}
+                <p class="alert alert-warning">No existen invitaciones</p>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+      </div>
+    {{else}}
+      {{> spinner}}
+    {{/if}}
+  {{/if}}
+</template>

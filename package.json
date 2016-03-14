@@ -1,0 +1,10 @@
+{
+  "name": "sinared",
+  "version": "1.0.0",
+  "description": "Sistema de Información Nacional de la Coordinación General de Redes Comerciales",
+  "scripts": {
+    "local": "meteor --settings settings-development.json",
+    "test": "meteor deploy sinared.meteor.com --settings settings-production.json --debug",
+    "prod": "meteor deploy sinared.meteor.com --settings settings-production.json"
+  }
+}

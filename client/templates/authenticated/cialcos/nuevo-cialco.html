@@ -1,0 +1,52 @@
+<template name="nuevoCialco">
+  {{#if Template.subscriptionsReady}}
+    <div class="row animated fadeIn">
+      <div class="col-xs-12">
+        <div class="card card-top-buffer">
+          <div class="card-body">
+            {{#autoForm collection='Cialcos' id='insertCialcoForm' type='insert'}}
+              <div class="row">
+                <div class="col-md-2">{{> afQuickField name='periodo.0.anio'}}</div>
+                <div class="col-md-3">{{> afQuickField name='periodo.0.cuatrimestre'}}</div>
+              </div>
+              <fieldset class="custom-fieldset">
+                <legend class="custom-legend">Ubicación</legend>
+                {{> afQuickField name='zonaID'}}
+                {{> afQuickField name='provinciaID'}}
+                {{> afQuickField name='cantonID'}}
+                {{> afQuickField name='parroquiaID'}}
+                {{> afQuickField name='sectorComunidad'}}
+              </fieldset>
+              <fieldset class="custom-fieldset">
+                <legend class="custom-legend">Datos del circuito</legend>
+                {{> afQuickField name='nombreCialco'}}
+                {{> afQuickField name='modalidad'}}
+                {{> afQuickField name='estado'}}
+                <div class="row">
+                  <div class="col-md-6">{{> afQuickField name='hombresCialco'}}</div>
+                  <div class="col-md-6">{{> afQuickField name='mujeresCialco'}}</div>
+                </div>
+              </fieldset>
+              <fieldset class="custom-fieldset">
+                <legend class="custom-legend">Datos del representante del circuito</legend>
+                <div class="row">
+                  <div class="col-md-4">{{> afQuickField name='cedulaRepresentante' id='ciaCedulaRepresentante'}}</div>
+                  <div class="col-md-8">{{> afQuickField name='nombreRepresentante' id='ciaNombreRepresentante'}}</div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">{{> afQuickField name='telefonoFijoRepresentante'}}</div>
+                  <div class="col-md-4">{{> afQuickField name='celularRepresentante'}}</div>
+                  <div class="col-md-4">{{> afQuickField name='emailRepresentante'}}</div>
+                </div>
+              </fieldset>
+              {{> afQuickField name='observaciones'}}
+              <button type='submit' class='btn btn-success'>GUARDAR</button>
+            {{/autoForm}}
+          </div>
+        </div>
+      </div>
+    </div>
+  {{else}}
+    {{> spinner}}
+  {{/if}}
+</template>

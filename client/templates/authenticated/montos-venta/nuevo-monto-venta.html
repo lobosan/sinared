@@ -1,0 +1,24 @@
+<template name="nuevoMontoVenta">
+  {{#if Template.subscriptionsReady}}
+    <div class="row animated fadeIn">
+      <div class="col-xs-12">
+        <div class="card card-top-buffer">
+          <div class="card-body">
+            {{#autoForm collection='MontosVenta' id='insertMontoVentaForm' type='insert'}}
+              <div class="row">
+                <div class="col-md-2">{{> afQuickField name='anio'}}</div>
+                <div class="col-md-2">{{> afQuickField name='semestre'}}</div>
+              </div>
+              {{> afQuickField name='zonaID'}}
+              {{> afQuickField name='provinciaID'}}
+              {{> afQuickField name='cialcos'}}
+              <button type='submit' class='btn btn-success'>GUARDAR</button>
+            {{/autoForm}}
+          </div>
+        </div>
+      </div>
+    </div>
+  {{else}}
+    {{> spinner}}
+  {{/if}}
+</template>

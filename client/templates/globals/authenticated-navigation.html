@@ -1,0 +1,107 @@
+<template name="authenticatedNavigation">
+  <ul class="nav navbar-nav">
+    {{#if isInRole 'admin'}}
+      <!--Reportes-->
+      <li class="dropdown {{currentRoute 'reporte-de-cialcos'}}">
+        <a data-toggle="collapse" href="#dropdown-reportes">
+          <span class="icon fa fa-line-chart"></span><span class="title">Reportes</span>
+        </a>
+        <div id="dropdown-reportes" class="panel-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="{{pathFor 'reporte-de-cialcos'}}">CIALCOs nuevos o fortalecidos</a></li>
+          </ul>
+        </div>
+      </li>
+      <!--CIALCOs-->
+      <li class="dropdown {{currentRoute 'cialcos'}} {{currentRoute 'nuevo-cialco'}}">
+        <a data-toggle="collapse" href="#dropdown-cialcos">
+          <span class="cialco-icon"></span><span class="title">CIALCOs</span>
+        </a>
+        <div id="dropdown-cialcos" class="panel-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="{{pathFor 'cialcos'}}">Lista de CIALCOs</a></li>
+            <li><a href="{{pathFor 'nuevo-cialco'}}">Nuevo CIALCO</a></li>
+          </ul>
+        </div>
+      </li>
+      <!--Organizaciones-->
+      <li class="dropdown {{currentRoute 'organizaciones'}} {{currentRoute 'nueva-organizacion'}}">
+        <a data-toggle="collapse" href="#dropdown-organizaciones">
+          <span class="icon fa fa-sitemap"></span><span class="title">Organizaciones</span>
+        </a>
+        <div id="dropdown-organizaciones" class="panel-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="{{pathFor 'organizaciones'}}">Lista de organizaciones</a></li>
+            <li><a href="{{pathFor 'nueva-organizacion'}}">Nueva organización</a></li>
+          </ul>
+        </div>
+      </li>
+      <!--Redes-->
+      <li class="dropdown {{currentRoute 'redes'}} {{currentRoute 'nueva-red'}}">
+        <a data-toggle="collapse" href="#dropdown-redes">
+          <span class="icon fa fa-connectdevelop"></span><span class="title">Redes</span>
+        </a>
+        <div id="dropdown-redes" class="panel-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="{{pathFor 'redes'}}">Lista de redes</a></li>
+            <li><a href="{{pathFor 'nueva-red'}}">Nueva red</a></li>
+          </ul>
+        </div>
+      </li>
+      <!--Productores-->
+      <li class="dropdown {{currentRoute 'productores'}} {{currentRoute 'nuevo-productor'}}">
+        <a data-toggle="collapse" href="#dropdown-productores">
+          <span class="icon icon-gla glyphicon glyphicon-grain"></span><span class="title title-gla">Productores</span>
+        </a>
+        <div id="dropdown-productores" class="panel-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="{{pathFor 'productores'}}">Lista de productores</a></li>
+            <li><a href="{{pathFor 'nuevo-productor'}}">Nuevo productor</a></li>
+          </ul>
+        </div>
+      </li>
+      <!--Montos de venta-->
+      <li class="dropdown {{currentRoute 'montos-de-venta'}} {{currentRoute 'nuevo-monto-venta'}}">
+        <a data-toggle="collapse" href="#dropdown-montos-venta">
+          <span class="icon fa fa-usd"></span><span class="title">Montos de venta</span>
+        </a>
+        <div id="dropdown-montos-venta" class="panel-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="{{pathFor 'montos-de-venta'}}">Lista de montos de venta</a></li>
+            <li><a href="{{pathFor 'nuevo-monto-venta'}}">Nuevo monto de venta</a></li>
+          </ul>
+        </div>
+      </li>
+      <!--Respaldos-->
+      <li class="dropdown {{currentRoute 'respaldos-gpr'}} {{currentRoute 'nuevo-respaldo-gpr'}}">
+        <a data-toggle="collapse" href="#dropdown-respaldos">
+          <span class="icon fa fa-paperclip"></span><span class="title">Respaldos GPR</span>
+        </a>
+        <div id="dropdown-respaldos" class="panel-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="{{pathFor 'respaldos-gpr'}}">Lista de respaldos GPR</a></li>
+            <li><a href="{{pathFor 'nuevo-respaldo-gpr'}}">Nuevo respaldo GPR</a></li>
+          </ul>
+        </div>
+      </li>
+      <!--Metas-->
+      <li class="dropdown {{currentRoute 'metas-gpr'}} {{currentRoute 'nuevas-metas-gpr'}}">
+        <a data-toggle="collapse" href="#dropdown-metas">
+          <span class="icon fa fa-dot-circle-o"></span><span class="title">Metas GPR</span>
+        </a>
+        <div id="dropdown-metas" class="panel-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="{{pathFor 'metas-gpr'}}">Lista de metas GPR</a></li>
+            <li><a href="{{pathFor 'nuevas-metas-gpr'}}">Nuevas metas GPR</a></li>
+          </ul>
+        </div>
+      </li>
+      <!--Usuarios-->
+      <li class="{{currentRoute 'administracion-de-usuarios'}}">
+        <a href="{{pathFor 'administracion-de-usuarios'}}">
+          <span class="icon fa fa-user"></span><span class="title">Administración de usuarios</span>
+        </a>
+      </li>
+    {{/if}}
+  </ul>
+</template>
