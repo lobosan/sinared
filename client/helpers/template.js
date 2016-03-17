@@ -22,14 +22,34 @@ Template.registerHelper('humanDate', (timestamp) => {
   }
 });
 
-Template.registerHelper('datePickerOptions', () => {
+Template.registerHelper('datePickerYearOptions', () => {
   return {
     format: "yyyy-mm-dd",
+    endDate: '+0d',
     weekStart: 1,
     autoclose: true,
     startView: 'year',
     todayHighlight: true,
     clearBtn: true,
     language: "es"
+  }
+});
+
+Template.registerHelper('datePickerDefaultOptions', () => {
+  return {
+    format: "yyyy-mm-dd",
+    endDate: '+0d',
+    weekStart: 1,
+    autoclose: true,
+    todayHighlight: true,
+    clearBtn: true,
+    language: "es"
+  }
+});
+
+Template.registerHelper('timePickerOptions', () => {
+  return {
+    pickDate: false,
+    format: 'LT'
   }
 });

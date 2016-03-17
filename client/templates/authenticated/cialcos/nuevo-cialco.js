@@ -15,7 +15,7 @@ Template.nuevoCialco.events({
     if (cedula !== '') {
       Meteor.call('consultarPorCedula', cedula, function (error, response) {
         if (error) {
-          Bert.alert(error.reason, "warning");
+          Bert.alert(error.reason, 'warning');
         } else {
           $('#ciaNombreRepresentante').val(`${response.apellidos} ${response.nombres}`);
         }

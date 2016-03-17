@@ -1807,6 +1807,10 @@ body.login-page .login-footer {
   color: #a94442;
 }
 
+.radio > label:after {
+  content: '' !important;
+}
+
 .custom-fieldset {
   border: 1px solid #ccc !important;
   padding: 0 1.4em 1.4em 1.4em !important;
@@ -1952,4 +1956,8 @@ label {
 .autoform-array-item-body .panel .panel-heading .panel-title {
   font-size: 14px;
   color: #555;
+}
+
+.cialco-item-estado th:nth-child(3), .cialco-item-estado td:nth-child(3) {
+  padding-left: 35px !important;
 }
