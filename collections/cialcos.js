@@ -27,33 +27,54 @@ Cialcos.attachSchema(new SimpleSchema({
     }
   },
   anio: {
-    type: String,
-    label: 'Año',
-    autoform: {
-      type: 'select',
-      defaultValue: 2015,
-      firstOption: 'Seleccione un año',
-      options: function () {
-        return _.map(_.range(2011, new Date().getFullYear() + 1), function (value) {
-          return {label: value, value: value};
-        });
+    type: Number,
+    autoValue: function () {
+      if (this.isInsert) {
+        let fechaLevantamientoDatos = this.field('fechaLevantamientoDatos').value;
+        let fecha = fechaLevantamientoDatos.split('-');
+        return Number(fecha[0]);
+      } else if (this.isUpsert) {
+        let fechaLevantamientoDatos = this.field('fechaLevantamientoDatos').value;
+        let fecha = fechaLevantamientoDatos.split('-');
+        return Number(fecha[0]);
+      } else {
+        this.unset();
       }
+    },
+    autoform: {
+      type: 'hidden',
+      label: false
     },
     optional: true
   },
   cuatrimestre: {
-    type: String,
-    label: 'Cuatrimestre',
-    autoform: {
-      type: 'select-radio-inline',
-      defaultValue: '3',
-      options: function () {
-        return [
-          {label: '1', value: '1'},
-          {label: '2', value: '2'},
-          {label: '3', value: '3'}
-        ];
+    type: Number,
+    autoValue: function () {
+      if (this.isInsert) {
+        let fechaLevantamientoDatos = this.field('fechaLevantamientoDatos').value;
+        if (fechaLevantamientoDatos) {
+          let fecha = fechaLevantamientoDatos.split('-');
+          let month = fecha[1];
+          if (month >= 1 && month <= 4) return 1;
+          if (month >= 5 && month <= 8) return 2;
+          if (month >= 9 && month <= 12) return 3;
+        }
+      } else if (this.isUpsert) {
+        let fechaLevantamientoDatos = this.field('fechaLevantamientoDatos').value;
+        if (fechaLevantamientoDatos) {
+          let fecha = fechaLevantamientoDatos.split('-');
+          let month = fecha[1];
+          if (month >= 1 && month <= 4) return 1;
+          if (month >= 5 && month <= 8) return 2;
+          if (month >= 9 && month <= 12) return 3;
+        }
+      } else {
+        this.unset();
       }
+    },
+    autoform: {
+      type: 'hidden',
+      label: false
     },
     optional: true
   },
@@ -104,7 +125,7 @@ Cialcos.attachSchema(new SimpleSchema({
           {label: 'Canasta de entrega dispersa', value: 'Canasta de entrega dispersa'},
           {label: 'Canasta de entrega en punto único', value: 'Canasta de entrega en punto único'},
           {label: 'Compra pública directa', value: 'Compra pública directa'},
-          {label: 'Compra pública a través de la UNA (Unidad Nacional de Almacenamiento)', value: 'Compra pública a través de la UNA (Unidad Nacional de Almacenamiento)'},
+          {label: 'Compra pública a través de la UNA-EP (Unidad Nacional de Almacenamiento - Empresa Pública)', value: 'Compra pública a través de la UNA-EP (Unidad Nacional de Almacenamiento - Empresa Pública)'},
           {label: 'Compra pública a través del SERCOP (Servicio Nacional de Contratación Pública)', value: 'Compra pública a través del SERCOP (Servicio Nacional de Contratación Pública)'},
           {label: 'Espacio de venta en mercado', value: 'Espacio de venta en mercado'},
           {label: 'Exportación campesina', value: 'Exportación campesina'},
@@ -258,6 +279,10 @@ Cialcos.attachSchema(new SimpleSchema({
     },
     optional: true
   },
+  sectorComunidad: {
+    type: String,
+    label: 'Sector o comunidad'
+  },
   puntoReferencia: {
     type: String,
     label: 'Punto de referencia'
@@ -324,6 +349,17 @@ Cialcos.attachSchema(new SimpleSchema({
     label: 'Número de mujeres que participan en el CIALCO',
     min: 0
   },
+  totalProductoresCialco: {
+    type: Number,
+    optional: true,
+    autoValue: function () {
+      return this.field('hombresCialco').value + this.field('mujeresCialco').value;
+    },
+    autoform: {
+      type: 'hidden',
+      label: false
+    }
+  },
   reglamento: {
     type: String,
     label: 'Tiene reglamento',
@@ -388,7 +424,9 @@ Cialcos.attachSchema(new SimpleSchema({
           {label: 'Comodato', value: 'Comodato'},
           {label: 'Comunal', value: 'Comunal'},
           {label: 'Prestado', value: 'Prestado'},
-          {label: 'Propio', value: 'Propio'}
+          {label: 'Propio', value: 'Propio'},
+          {label: 'Provisto por el GAD', value: 'Provisto por el GAD'},
+          {label: 'Público', value: 'Público'}
         ];
       }
     }
@@ -402,7 +440,8 @@ Cialcos.attachSchema(new SimpleSchema({
         return [
           {label: 'Contrato', value: 'Contrato'},
           {label: 'Convenio', value: 'Convenio'},
-          {label: 'Escritura', value: 'Escritura'}
+          {label: 'Escritura', value: 'Escritura'},
+          {label: 'Ninguno', value: 'Ninguno'}
         ];
       }
     }
@@ -466,7 +505,7 @@ Cialcos.attachSchema(new SimpleSchema({
     },
     optional: true
   },
-  pisoCantidad: {
+  casetaCantidad: {
     type: Number,
     autoform: {
       label: false
@@ -474,7 +513,26 @@ Cialcos.attachSchema(new SimpleSchema({
     optional: true,
     min: 1
   },
-  pisoEstado: {
+  casetaEstado: {
+    type: String,
+    autoform: {
+      type: 'select-radio-inline',
+      label: false,
+      options: function () {
+        return itemEstado;
+      }
+    },
+    optional: true
+  },
+  oficinaCantidad: {
+    type: Number,
+    autoform: {
+      label: false
+    },
+    optional: true,
+    min: 1
+  },
+  oficinaEstado: {
     type: String,
     autoform: {
       type: 'select-radio-inline',
@@ -551,6 +609,44 @@ Cialcos.attachSchema(new SimpleSchema({
     min: 1
   },
   parqueaderoEstado: {
+    type: String,
+    autoform: {
+      type: 'select-radio-inline',
+      label: false,
+      options: function () {
+        return itemEstado;
+      }
+    },
+    optional: true
+  },
+  lavaderoCantidad: {
+    type: Number,
+    autoform: {
+      label: false
+    },
+    optional: true,
+    min: 1
+  },
+  lavaderoEstado: {
+    type: String,
+    autoform: {
+      type: 'select-radio-inline',
+      label: false,
+      options: function () {
+        return itemEstado;
+      }
+    },
+    optional: true
+  },
+  centroAcopioCantidad: {
+    type: Number,
+    autoform: {
+      label: false
+    },
+    optional: true,
+    min: 1
+  },
+  centroAcopioEstado: {
     type: String,
     autoform: {
       type: 'select-radio-inline',
@@ -887,28 +983,27 @@ Cialcos.attachSchema(new SimpleSchema({
   },
   /*** TIPOS DE PRODUCTOS QUE SE COMERCIALIZAN ***/
   tiposProductosComercializan: {
-    type: String,
+    type: [String],
     autoform: {
       type: 'select-checkbox',
       label: false,
       options: function () {
         return [
           {label: 'Abastos', value: 'Abastos'},
+          {label: 'Animales en pie', value: 'Animales en pie'},
           {label: 'Artesanías', value: 'Artesanías'},
-          {label: 'Aves', value: 'Aves'},
-          {label: 'Cárnicos (especies mayores)', value: 'Cárnicos (especies mayores)'},
-          {label: 'Cárnicos (especies menores)', value: 'Cárnicos (especies menores)'},
+          {label: 'Carne de animales faenados', value: 'Carne de animales faenados'},
           {label: 'Cereales', value: 'Cereales'},
+          {label: 'Comidas y/o bebidas', value: 'Comidas y/o bebidas'},
           {label: 'Embutidos artesanales', value: 'Embutidos artesanales'},
           {label: 'Frutas de clima frío', value: 'Frutas de clima frío'},
           {label: 'Frutas tropicales', value: 'Frutas de clima cálido'},
-          {label: 'Gastronomía', value: 'Gastronomía'},
           {label: 'Hortalizas', value: 'Hortalizas'},
           {label: 'Huevos', value: 'Huevos'},
           {label: 'Lácteos', value: 'Lácteos'},
           {label: 'Mariscos', value: 'Mariscos'},
           {label: 'Pescados', value: 'Pescados'},
-          {label: 'Procesados', value: 'Procesados'},
+          {label: 'Productos agrícolas con valor agregado', value: 'Productos agrícolas con valor agregado'},
           {label: 'Tubérculos', value: 'Tubérculos'},
           {label: 'Otros (insumos, plantas)', value: 'Otros (insumos, plantas)'}
         ];
@@ -917,18 +1012,18 @@ Cialcos.attachSchema(new SimpleSchema({
     optional: true
   },
   /*estado: {
-    type: String,
-    label: 'Estado',
-    autoform: {
-      type: 'select-radio-inline',
-      options: function () {
-        return [
-          {label: 'Nuevo', value: 'Nuevo'},
-          {label: 'Fortalecido', value: 'Fortalecido'}
-        ];
-      }
-    }
-  },*/
+   type: String,
+   label: 'Estado',
+   autoform: {
+   type: 'select-radio-inline',
+   options: function () {
+   return [
+   {label: 'Nuevo', value: 'Nuevo'},
+   {label: 'Fortalecido', value: 'Fortalecido'}
+   ];
+   }
+   }
+   },*/
   /*** MEDIOS TRADICIONALES DE DIFUSIÓN ***/
   volantesFrecuencia: {
     type: String,

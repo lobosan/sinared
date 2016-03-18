@@ -26,6 +26,7 @@
                 {{> afQuickField name='provinciaID'}}
                 {{> afQuickField name='cantonID'}}
                 {{> afQuickField name='parroquiaID'}}
+                {{> afQuickField name='sectorComunidad'}}
                 {{> afQuickField name='puntoReferencia'}}
                 <div class="row">
                   <div class="col-md-10">{{> afQuickField name='callePrincipalCarretera'}}</div>
@@ -81,14 +82,19 @@
                         <td>{{> afQuickField name='cubiertaEstado'}}</td>
                       </tr>
                       <tr>
-                        <td>Puestos individuales o casetas</td>
+                        <td>Puestos individuales</td>
                         <td>{{> afQuickField name='puestoCantidad'}}</td>
                         <td>{{> afQuickField name='puestoEstado'}}</td>
                       </tr>
                       <tr>
-                        <td>Piso</td>
-                        <td>{{> afQuickField name='pisoCantidad'}}</td>
-                        <td>{{> afQuickField name='pisoEstado'}}</td>
+                        <td>Casetas</td>
+                        <td>{{> afQuickField name='casetaCantidad'}}</td>
+                        <td>{{> afQuickField name='casetaEstado'}}</td>
+                      </tr>
+                      <tr>
+                        <td>Oficina</td>
+                        <td>{{> afQuickField name='oficinaCantidad'}}</td>
+                        <td>{{> afQuickField name='oficinaEstado'}}</td>
                       </tr>
                       <tr>
                         <td>Baños o baterías sanitarias</td>
@@ -106,9 +112,19 @@
                         <td>{{> afQuickField name='cuartoFrioEstado'}}</td>
                       </tr>
                       <tr>
-                        <td>Parqueadero</td>
+                        <td>Parqueaderos</td>
                         <td>{{> afQuickField name='parqueaderoCantidad'}}</td>
                         <td>{{> afQuickField name='parqueaderoEstado'}}</td>
+                      </tr>
+                      <tr>
+                        <td>Lavaderos</td>
+                        <td>{{> afQuickField name='lavaderoCantidad'}}</td>
+                        <td>{{> afQuickField name='lavaderoEstado'}}</td>
+                      </tr>
+                      <tr>
+                        <td>Centro de acopio</td>
+                        <td>{{> afQuickField name='centroAcopioCantidad'}}</td>
+                        <td>{{> afQuickField name='centroAcopioEstado'}}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -235,7 +251,7 @@
                         <td>{{> afQuickField name='volantesFrecuencia'}}</td>
                       </tr>
                       <tr>
-                        <td>Afiches o posters</td>
+                        <td>Afiches o pósters</td>
                         <td>{{> afQuickField name='afichesFrecuencia'}}</td>
                       </tr>
                       <tr>

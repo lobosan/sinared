@@ -8,7 +8,7 @@ Template.registerHelper('isCurrentUser', (currentUser) => {
 
 Template.registerHelper('disableIfAdmin', (userId) => {
   if (Meteor.userId() === userId) {
-    return Roles.userIsInRole(userId, 'admin') ? "disabled" : "";
+    return Roles.userIsInRole(userId, 'admin') ? 'disabled' : '';
   }
 });
 
@@ -18,38 +18,38 @@ Template.registerHelper('selected', (v1, v2) => {
 
 Template.registerHelper('humanDate', (timestamp) => {
   if (timestamp) {
-    return moment(timestamp).format("YYYY-MM-DD");
+    return moment(timestamp).format('YYYY-MM-DD');
   }
 });
 
 Template.registerHelper('datePickerYearOptions', () => {
   return {
-    format: "yyyy-mm-dd",
+    format: 'yyyy-mm-dd',
     endDate: '+0d',
     weekStart: 1,
     autoclose: true,
     startView: 'year',
     todayHighlight: true,
     clearBtn: true,
-    language: "es"
+    language: 'es'
   }
 });
 
 Template.registerHelper('datePickerDefaultOptions', () => {
   return {
-    format: "yyyy-mm-dd",
+    format: 'yyyy-mm-dd',
     endDate: '+0d',
     weekStart: 1,
     autoclose: true,
     todayHighlight: true,
     clearBtn: true,
-    language: "es"
+    language: 'es'
   }
 });
 
 Template.registerHelper('timePickerOptions', () => {
   return {
-    pickDate: false,
-    format: 'LT'
+    format: 'HH:mm',
+    pickDate: false
   }
 });
