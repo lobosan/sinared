@@ -2,170 +2,28 @@ Organizaciones = new Meteor.Collection('organizaciones');
 SubsManagerOrganizaciones = new SubsManager();
 
 Organizaciones.attachSchema(new SimpleSchema({
-  periodo: {
-    type: [Object],
-    label: 'Periodo'
-  },
-  'periodo.$.anio': {
+  /*** DATOS GENERALES ***/
+  fechaLevantamientoDatos: {
     type: String,
-    label: 'Año',
+    label: 'Fecha de levantamiento de datos',
     autoform: {
-      type: 'select',
-      defaultValue: 2015,
-      firstOption: 'Seleccione un año',
-      options: function () {
-        return _.map(_.range(2011, new Date().getFullYear() + 1), function (value) {
-          return {label: value, value: value};
-        });
+      afFieldInput: {
+        type: 'bootstrap-datepicker'
       }
     }
   },
-  'periodo.$.cuatrimestre': {
-    type: String,
-    label: 'Cuatrimestre',
-    autoform: {
-      type: 'select-radio-inline',
-      defaultValue: '3',
-      options: function () {
-        return [
-          {label: '1', value: '1'},
-          {label: '2', value: '2'},
-          {label: '3', value: '3'}
-        ];
-      }
-    }
-  },
-  zonaID: {
-    type: String,
-    label: 'Zona',
-    autoform: {
-      type: 'select',
-      firstOption: 'Seleccione una zona',
-      options: function () {
-        return DPA.find({grupo: 'Zona'}).map(function (dpa) {
-          return {label: dpa.descripcion, value: dpa.codigo};
-        });
-      }
-    }
-  },
-  zonaNombre: {
-    type: String,
-    autoValue: function () {
-      if (this.isInsert) {
-        let codigoZona = this.field('zonaID').value;
-        if (codigoZona)
-          return DPA.findOne({codigo: codigoZona}).descripcion;
-      } else if (this.isUpsert) {
-        return {$setOnInsert: DPA.findOne({codigo: codigoZona}).descripcion};
-      } else {
-        this.unset();
-      }
-    },
-    autoform: {
-      type: 'hidden',
-      label: false
-    },
-    optional: true
-  },
-  provinciaID: {
-    type: String,
-    label: 'Provincia',
-    autoform: {
-      type: 'select',
-      firstOption: 'Seleccione una provincia',
-      options: function () {
-        var codigoZona = AutoForm.getFieldValue('zonaID');
-        var provincias = new RegExp('^' + codigoZona + '[\\d]{2}$');
-        return DPA.find({codigo: {$regex: provincias}}).map(function (dpa) {
-          return {label: dpa.descripcion, value: dpa.codigo};
-        });
-      }
-    }
-  },
-  provinciaNombre: {
-    type: String,
-    autoValue: function () {
-      if (this.isInsert) {
-        let codigoProvincia = this.field('provinciaID').value;
-        if (codigoProvincia)
-          return DPA.findOne({codigo: codigoProvincia}).descripcion;
-      } else if (this.isUpsert) {
-        return {$setOnInsert: DPA.findOne({codigo: codigoProvincia}).descripcion};
-      } else {
-        this.unset();
-      }
-    },
-    autoform: {
-      type: 'hidden',
-      label: false
-    },
-    optional: true
-  },
-  cantonID: {
-    type: String,
-    label: 'Cantón',
-    autoform: {
-      type: 'select',
-      firstOption: 'Seleccione un cantón',
-      options: function () {
-        var codigoProvincia = AutoForm.getFieldValue('provinciaID');
-        var cantones = new RegExp('^' + codigoProvincia + '[\\d]{2}$');
-        return DPA.find({codigo: {$regex: cantones}}).map(function (dpa) {
-          return {label: dpa.descripcion, value: dpa.codigo};
-        });
-      }
-    }
-  },
-  cantonNombre: {
-    type: String,
-    autoValue: function () {
-      if (this.isInsert) {
-        let codigoCanton = this.field('cantonID').value;
-        if (codigoCanton)
-          return DPA.findOne({codigo: codigoCanton}).descripcion;
-      } else if (this.isUpsert) {
-        return {$setOnInsert: DPA.findOne({codigo: codigoCanton}).descripcion};
-      } else {
-        this.unset();
-      }
-    },
-    autoform: {
-      type: 'hidden',
-      label: false
-    },
-    optional: true
-  },
-  parroquiaID: {
-    type: String,
-    label: 'Parroquia',
+  anio: {
     optional: true,
-    autoform: {
-      type: 'select',
-      firstOption: 'Seleccione una parroquia',
-      options: function () {
-        $("[name='zona']").change(function() {
-          $("[name='parroquiaID'] option[value!='']").remove();
-        });
-        $("[name='provinciaID']").change(function() {
-          $("[name='parroquiaID'] option[value!='']").remove();
-        });
-        var codigoCanton = AutoForm.getFieldValue('cantonID');
-        var parroquias = new RegExp('^' + codigoCanton + '[\\d]{2}$');
-        return DPA.find({codigo: {$regex: parroquias}}).map(function (dpa) {
-          return {label: dpa.descripcion, value: dpa.codigo};
-        });
-      }
-    }
-  },
-  parroquiaNombre: {
-    type: String,
+    type: Number,
     autoValue: function () {
       if (this.isInsert) {
-        let codigoParroquia = this.field('parroquiaID').value;
-        if (codigoParroquia)
-          return DPA.findOne({codigo: codigoParroquia}).descripcion;
+        let fechaLevantamientoDatos = this.field('fechaLevantamientoDatos').value;
+        let fecha = fechaLevantamientoDatos.split('-');
+        return Number(fecha[0]);
       } else if (this.isUpsert) {
-        return {$setOnInsert: DPA.findOne({codigo: codigoParroquia}).descripcion};
+        let fechaLevantamientoDatos = this.field('fechaLevantamientoDatos').value;
+        let fecha = fechaLevantamientoDatos.split('-');
+        return Number(fecha[0]);
       } else {
         this.unset();
       }
@@ -173,23 +31,103 @@ Organizaciones.attachSchema(new SimpleSchema({
     autoform: {
       type: 'hidden',
       label: false
-    },
-    optional: true
+    }
   },
-  sectorComunidad: {
+  cuatrimestre: {
+    optional: true,
+    type: Number,
+    autoValue: function () {
+      if (this.isInsert) {
+        let fechaLevantamientoDatos = this.field('fechaLevantamientoDatos').value;
+        if (fechaLevantamientoDatos) {
+          let fecha = fechaLevantamientoDatos.split('-');
+          let month = fecha[1];
+          if (month >= 1 && month <= 4) return 1;
+          if (month >= 5 && month <= 8) return 2;
+          if (month >= 9 && month <= 12) return 3;
+        }
+      } else if (this.isUpsert) {
+        let fechaLevantamientoDatos = this.field('fechaLevantamientoDatos').value;
+        if (fechaLevantamientoDatos) {
+          let fecha = fechaLevantamientoDatos.split('-');
+          let month = fecha[1];
+          if (month >= 1 && month <= 4) return 1;
+          if (month >= 5 && month <= 8) return 2;
+          if (month >= 9 && month <= 12) return 3;
+        }
+      } else {
+        this.unset();
+      }
+    },
+    autoform: {
+      type: 'hidden',
+      label: false
+    }
+  },
+  nombreLevantadorDatos: {
     type: String,
-    label: 'Sector o comunidad',
-    optional: true
+    label: 'Nombre de quien levanta los datos'
+  },
+  hombresOrganizacion: {
+    optional: true,
+    type: Number,
+    label: 'Número de hombres en la organización',
+    min: 0
+  },
+  mujeresOrganizacion: {
+    optional: true,
+    type: Number,
+    label: 'Número de mujeres en la organización',
+    min: 0
+  },
+  totalProductoresOrganizacion: {
+    type: Number,
+    label: 'Total de productores en la organización',
+    min: 0
   },
   ruc: {
-    type: String,
+    optional: true,
+    type: Number,
     label: 'RUC de la organización',
     index: true,
     unique: true,
     regEx: /^[0-9]{13}$/,
     min: 13,
-    max: 13,
-    optional: true
+    max: 13
+  },
+  acreditacionMagap: {
+    optional: true,
+    type: String,
+    label: 'Número de acreditación MAGAP',
+    index: true,
+    unique: true
+  },
+  fechaAcreditacionMagap: {
+    optional: true,
+    type: String,
+    label: 'Fecha de acreditación en el MAGAP',
+    autoform: {
+      afFieldInput: {
+        type: "bootstrap-datepicker"
+      }
+    }
+  },
+  registroSeps: {
+    optional: true,
+    type: String,
+    label: 'Número de registro en la SEPS',
+    index: true,
+    unique: true
+  },
+  fechaRegistroSEPS: {
+    optional: true,
+    type: String,
+    label: 'Fecha de registro en la SEPS',
+    autoform: {
+      afFieldInput: {
+        type: "bootstrap-datepicker"
+      }
+    }
   },
   nombreOrganizacion: {
     type: String,
@@ -198,140 +136,98 @@ Organizaciones.attachSchema(new SimpleSchema({
     unique: true
   },
   actividadEconomica: {
+    optional: true,
     type: String,
-    label: 'Actividad económica',
-    optional: true
+    label: 'Actividad económica'
   },
   cedulaRepresentante: {
+    optional: true,
     type: String,
     label: 'Cédula del representante',
     regEx: /^[0-9]{10}$/,
     min: 10,
-    max: 10,
-    optional: true
+    max: 10
   },
   nombreRepresentante: {
     type: String,
     label: 'Nombre del representante'
   },
   direccion: {
+    optional: true,
     type: String,
     label: 'Dirección de la organización',
-    optional: true,
     autoform: {
       rows: 2
     }
   },
-  telefonoFijo1: {
+  telefonoFijoRepresentante: {
+    optional: true,
     type: String,
     label: 'Teléfono fijo 1',
     regEx: /^0[2-7]{1}-?\d{3}-?\d{4}$/,
     autoform: {
       placeholder: '02-000-0000'
-    },
-    optional: true
+    }
   },
   telefonoFijo2: {
+    optional: true,
     type: String,
     label: 'Teléfono fijo 2',
     regEx: /^0[2-7]{1}-?\d{3}-?\d{4}$/,
     autoform: {
       placeholder: '02-000-0000'
-    },
-    optional: true
+    }
   },
-  telefonoFijo3: {
-    type: String,
-    label: 'Teléfono fijo 3',
-    regEx: /^0[2-7]{1}-?\d{3}-?\d{4}$/,
-    autoform: {
-      placeholder: '02-000-0000'
-    },
-    optional: true
-  },
-  celular1: {
+  celularRepresentante: {
+    optional: true,
     type: String,
     label: 'Teléfono celular 1',
     regEx: /^0[8-9]{1}\d{1}-?\d{3}-?\d{4}$/,
     autoform: {
       placeholder: '090-000-0000'
-    },
-    optional: true
+    }
   },
   celular2: {
+    optional: true,
     type: String,
     label: 'Teléfono celular 2',
     regEx: /^0[8-9]{1}\d{1}-?\d{3}-?\d{4}$/,
     autoform: {
       placeholder: '090-000-0000'
-    },
-    optional: true
+    }
   },
-  email: {
+  emailRepresentante: {
+    optional: true,
     type: String,
     label: 'Correo electrónico',
-    regEx: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
-    optional: true
+    regEx: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
   },
   paginaWeb: {
+    optional: true,
     type: String,
     label: 'Página Web',
-    regEx: /^(http\:\/\/|https\:\/\/)?([a-z0-9][a-z0-9\-]*\.)+[a-z0-9][a-z0-9\-]*$/,
-    optional: true
+    regEx: /^(http\:\/\/|https\:\/\/)?([a-z0-9][a-z0-9\-]*\.)+[a-z0-9][a-z0-9\-]*$/
   },
   facebook: {
+    optional: true,
     type: String,
-    label: 'Facebook',
-    optional: true
+    label: 'Facebook'
   },
   twitter: {
+    optional: true,
     type: String,
     label: 'Twitter',
     regEx: /@([A-Za-z0-9_]+)/,
-    min: 6,
-    optional: true
+    min: 6
   },
-  seps: {
-    type: String,
-    label: 'Fecha de registro en la SEPS',
-    optional: true,
-    autoform: {
-      afFieldInput: {
-        type: "bootstrap-datepicker"
-      }
-    }
-  },
-  acreditacionMagap: {
-    type: String,
-    label: 'Fecha de acreditación en el MAGAP',
-    optional: true,
-    autoform: {
-      afFieldInput: {
-        type: "bootstrap-datepicker"
-      }
-    }
-  },
-  hombresOrganizacion: {
-    type: Number,
-    label: 'Número de hombres en la organización',
-    min: 0,
-    optional: true
-  },
-  mujeresOrganizacion: {
-    type: Number,
-    label: 'Número de mujeres en la organización',
-    min: 0,
-    optional: true
-  },
-  totalProductoresOrganizacion: {
-    type: Number,
-    label: 'Total de productores en la organización',
-    min: 0
+  /*** UBICACIÓN ***/
+  ubicacion: {
+    type: UbicacionSchema
   },
   productoresCialco: {
+    optional: true,
     type: [Object],
-    label: 'Productores de la organización vinculados a CIALCOs',
-    optional: true
+    label: 'Productores de la organización vinculados a CIALCOs'
   },
   'productoresCialco.$.cialcoID': {
     type: String,
@@ -395,12 +291,74 @@ Organizaciones.attachSchema(new SimpleSchema({
       label: false
     }
   },
+  /*** TIPO DE CIALCO ***/
+  cialcosParticipa: {
+    type: [String],
+    autoform: {
+      type: 'select-checkbox',
+      label: false,
+      options: function () {
+        return [
+          {label: 'Abastecimiento a catering', value: 'Abastecimiento a catering'},
+          {label: 'Abastecimiento a MIPYMES', value: 'Abastecimiento a MIPYMES'},
+          {label: 'Abastecimiento a restaurantes locales', value: 'Abastecimiento a restaurantes locales'},
+          {label: 'Abastecimiento a tiendas de barrio', value: 'Abastecimiento a tiendas de barrio'},
+          {label: 'Canasta de entrega dispersa', value: 'Canasta de entrega dispersa'},
+          {label: 'Canasta de entrega en punto único', value: 'Canasta de entrega en punto único'},
+          {label: 'Compra pública directa', value: 'Compra pública directa'},
+          {label: 'Compra pública a través de la UNA-EP (Unidad Nacional de Almacenamiento - Empresa Pública)', value: 'Compra pública a través de la UNA-EP (Unidad Nacional de Almacenamiento - Empresa Pública)'},
+          {label: 'Compra pública a través del SERCOP (Servicio Nacional de Contratación Pública)', value: 'Compra pública a través del SERCOP (Servicio Nacional de Contratación Pública)'},
+          {label: 'Espacio de venta en mercado', value: 'Espacio de venta en mercado'},
+          {label: 'Exportación campesina', value: 'Exportación campesina'},
+          {label: 'Feria de productores', value: 'Feria de productores'},
+          {label: 'Tienda comunitaria o de productores', value: 'Tienda comunitaria o de productores'},
+          {label: 'Turismo comunitario o agroturismo', value: 'Turismo comunitario o agroturismo'},
+          {label: 'Venta directa en finca (pie de finca)', value: 'Venta directa en finca (pie de finca)'},
+          {label: 'Otro', value: 'Otro'}
+        ];
+      }
+    }
+  },
   observaciones: {
+    optional: true,
     type: String,
     label: 'Observaciones',
-    optional: true,
     autoform: {
       rows: 4
+    }
+  },
+  responsable: {
+    optional: true,
+    type: String,
+    autoValue: function () {
+      if (this.isInsert) {
+        return Meteor.users.findOne({_id: Meteor.userId()}).profile.name;
+      } else if (this.isUpsert) {
+        return {$setOnInsert: Meteor.users.findOne({_id: Meteor.userId()}).profile.name};
+      } else {
+        this.unset();
+      }
+    },
+    autoform: {
+      type: 'hidden',
+      label: false
+    }
+  },
+  createdBy: {
+    optional: true,
+    type: String,
+    autoValue: function () {
+      if (this.isInsert) {
+        return Meteor.userId();
+      } else if (this.isUpsert) {
+        return {$setOnInsert: Meteor.userId()};
+      } else {
+        this.unset();
+      }
+    },
+    autoform: {
+      type: 'hidden',
+      label: false
     }
   },
   createdAt: {
@@ -420,40 +378,6 @@ Organizaciones.attachSchema(new SimpleSchema({
       type: 'hidden',
       label: false
     }
-  },
-  createdBy: {
-    type: String,
-    autoValue: function () {
-      if (this.isInsert) {
-        return Meteor.userId();
-      } else if (this.isUpsert) {
-        return {$setOnInsert: Meteor.userId()};
-      } else {
-        this.unset();
-      }
-    },
-    autoform: {
-      type: 'hidden',
-      label: false
-    },
-    optional: true
-  },
-  responsable: {
-    type: String,
-    autoValue: function () {
-      if (this.isInsert) {
-        return Meteor.users.findOne({_id: Meteor.userId()}).profile.name;
-      } else if (this.isUpsert) {
-        return {$setOnInsert: Meteor.users.findOne({_id: Meteor.userId()}).profile.name};
-      } else {
-        this.unset();
-      }
-    },
-    autoform: {
-      type: 'hidden',
-      label: false
-    },
-    optional: true
   }
 }));
 

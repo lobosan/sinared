@@ -20,8 +20,7 @@ Meteor.methods({
             nombreRepresentante: arrayResultado[8],
             direccion: arrayResultado[2],
             telefonoFijo1: arrayResultado[4],
-            telefonoFijo2: arrayResultado[5],
-            telefonoFijo3: arrayResultado[5]
+            telefonoFijo2: arrayResultado[5]
           };
         } else {
           return {

@@ -1,12 +1,6 @@
 Cialcos = new Meteor.Collection('cialcos');
 SubsManagerCialcos = new SubsManager();
 
-let itemEstado = [
-  {label: 'Bueno', value: 'Bueno'},
-  {label: 'Regular', value: 'Regular'},
-  {label: 'Malo', value: 'Malo'}
-];
-
 let mediosDifusionFrecuencia = [
   {label: 'Semanal', value: 'Semanal'},
   {label: 'Quincenal', value: 'Quincenal'},
@@ -27,6 +21,7 @@ Cialcos.attachSchema(new SimpleSchema({
     }
   },
   anio: {
+    optional: true,
     type: Number,
     autoValue: function () {
       if (this.isInsert) {
@@ -44,10 +39,10 @@ Cialcos.attachSchema(new SimpleSchema({
     autoform: {
       type: 'hidden',
       label: false
-    },
-    optional: true
+    }
   },
   cuatrimestre: {
+    optional: true,
     type: Number,
     autoValue: function () {
       if (this.isInsert) {
@@ -75,8 +70,7 @@ Cialcos.attachSchema(new SimpleSchema({
     autoform: {
       type: 'hidden',
       label: false
-    },
-    optional: true
+    }
   },
   nombreLevantadorDatos: {
     type: String,
@@ -139,168 +133,8 @@ Cialcos.attachSchema(new SimpleSchema({
     }
   },
   /*** UBICACIÓN ***/
-  zonaID: {
-    type: String,
-    label: 'Zona',
-    autoform: {
-      type: 'select',
-      firstOption: 'Seleccione una zona',
-      options: function () {
-        return DPA.find({grupo: 'Zona'}).map(function (dpa) {
-          return {label: dpa.descripcion, value: dpa.codigo};
-        });
-      }
-    }
-  },
-  zonaNombre: {
-    type: String,
-    autoValue: function () {
-      if (this.isInsert) {
-        let codigoZona = this.field('zonaID').value;
-        if (codigoZona)
-          return DPA.findOne({codigo: codigoZona}).descripcion;
-      } else if (this.isUpsert) {
-        return {$setOnInsert: DPA.findOne({codigo: codigoZona}).descripcion};
-      } else {
-        this.unset();
-      }
-    },
-    autoform: {
-      type: 'hidden',
-      label: false
-    },
-    optional: true
-  },
-  provinciaID: {
-    type: String,
-    label: 'Provincia',
-    autoform: {
-      type: 'select',
-      firstOption: 'Seleccione una provincia',
-      options: function () {
-        var codigoZona = AutoForm.getFieldValue('zonaID');
-        var provincias = new RegExp('^' + codigoZona + '[\\d]{2}$');
-        return DPA.find({codigo: {$regex: provincias}}).map(function (dpa) {
-          return {label: dpa.descripcion, value: dpa.codigo};
-        });
-      }
-    }
-  },
-  provinciaNombre: {
-    type: String,
-    autoValue: function () {
-      if (this.isInsert) {
-        let codigoProvincia = this.field('provinciaID').value;
-        if (codigoProvincia)
-          return DPA.findOne({codigo: codigoProvincia}).descripcion;
-      } else if (this.isUpsert) {
-        return {$setOnInsert: DPA.findOne({codigo: codigoProvincia}).descripcion};
-      } else {
-        this.unset();
-      }
-    },
-    autoform: {
-      type: 'hidden',
-      label: false
-    },
-    optional: true
-  },
-  cantonID: {
-    type: String,
-    label: 'Cantón',
-    autoform: {
-      type: 'select',
-      firstOption: 'Seleccione un cantón',
-      options: function () {
-        var codigoProvincia = AutoForm.getFieldValue('provinciaID');
-        var cantones = new RegExp('^' + codigoProvincia + '[\\d]{2}$');
-        return DPA.find({codigo: {$regex: cantones}}).map(function (dpa) {
-          return {label: dpa.descripcion, value: dpa.codigo};
-        });
-      }
-    }
-  },
-  cantonNombre: {
-    type: String,
-    autoValue: function () {
-      if (this.isInsert) {
-        let codigoCanton = this.field('cantonID').value;
-        if (codigoCanton)
-          return DPA.findOne({codigo: codigoCanton}).descripcion;
-      } else if (this.isUpsert) {
-        return {$setOnInsert: DPA.findOne({codigo: codigoCanton}).descripcion};
-      } else {
-        this.unset();
-      }
-    },
-    autoform: {
-      type: 'hidden',
-      label: false
-    },
-    optional: true
-  },
-  parroquiaID: {
-    type: String,
-    label: 'Parroquia',
-    autoform: {
-      type: 'select',
-      firstOption: 'Seleccione una parroquia',
-      options: function () {
-        $("[name='zona']").change(function () {
-          $("[name='parroquiaID'] option[value!='']").remove();
-        });
-        $("[name='provinciaID']").change(function () {
-          $("[name='parroquiaID'] option[value!='']").remove();
-        });
-        var codigoCanton = AutoForm.getFieldValue('cantonID');
-        var parroquias = new RegExp('^' + codigoCanton + '[\\d]{2}$');
-        return DPA.find({codigo: {$regex: parroquias}}).map(function (dpa) {
-          return {label: dpa.descripcion, value: dpa.codigo};
-        });
-      }
-    }
-  },
-  parroquiaNombre: {
-    type: String,
-    autoValue: function () {
-      if (this.isInsert) {
-        let codigoParroquia = this.field('parroquiaID').value;
-        if (codigoParroquia)
-          return DPA.findOne({codigo: codigoParroquia}).descripcion;
-      } else if (this.isUpsert) {
-        return {$setOnInsert: DPA.findOne({codigo: codigoParroquia}).descripcion};
-      } else {
-        this.unset();
-      }
-    },
-    autoform: {
-      type: 'hidden',
-      label: false
-    },
-    optional: true
-  },
-  sectorComunidad: {
-    type: String,
-    label: 'Sector o comunidad'
-  },
-  puntoReferencia: {
-    type: String,
-    label: 'Punto de referencia'
-  },
-  callePrincipalCarretera: {
-    type: String,
-    label: 'Calle principal o carretera ',
-    optional: true
-  },
-  numeroPredioLote: {
-    type: String,
-    label: 'Número de predio, lote o Km',
-    optional: true
-  },
-  calleSecundaria: {
-    type: String,
-    label: 'Calle secundaria',
-    optional: true
+  ubicacion: {
+    type: UbicacionSchema
   },
   /*** DATOS DEL REPRESENTANTE ***/
   cedulaRepresentante: {
@@ -315,28 +149,28 @@ Cialcos.attachSchema(new SimpleSchema({
     label: 'Nombre del representante'
   },
   telefonoFijoRepresentante: {
+    optional: true,
     type: String,
     label: 'Teléfono fijo',
     regEx: /^0[2-7]{1}-?\d{3}-?\d{4}$/,
     autoform: {
       placeholder: '02-000-0000'
-    },
-    optional: true
+    }
   },
   celularRepresentante: {
+    optional: true,
     type: String,
     label: 'Teléfono celular',
     regEx: /^0[8-9]{1}\d{1}-?\d{3}-?\d{4}$/,
     autoform: {
       placeholder: '090-000-0000'
-    },
-    optional: true
+    }
   },
   emailRepresentante: {
+    optional: true,
     type: String,
     label: 'Correo electrónico',
-    regEx: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
-    optional: true
+    regEx: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
   },
   /*** FUNCIONAMIENTO DEL CIALCO ***/
   hombresCialco: {
@@ -350,8 +184,8 @@ Cialcos.attachSchema(new SimpleSchema({
     min: 0
   },
   totalProductoresCialco: {
-    type: Number,
     optional: true,
+    type: Number,
     autoValue: function () {
       return this.field('hombresCialco').value + this.field('mujeresCialco').value;
     },
@@ -448,8 +282,8 @@ Cialcos.attachSchema(new SimpleSchema({
   },
   /*** SERVICIOS CON LOS QUE CUENTA EL CIALCO ***/
   servicios: {
-    type: [String],
     optional: true,
+    type: [String],
     autoform: {
       type: 'select-checkbox',
       label: false,
@@ -467,522 +301,16 @@ Cialcos.attachSchema(new SimpleSchema({
     }
   },
   /*** INFRAESTRUCTURA ***/
-  cubiertaCantidad: {
-    type: Number,
-    autoform: {
-      label: false
-    },
-    optional: true,
-    min: 1
-  },
-  cubiertaEstado: {
-    type: String,
-    autoform: {
-      type: 'select-radio-inline',
-      label: false,
-      options: function () {
-        return itemEstado;
-      }
-    },
-    optional: true
-  },
-  puestoCantidad: {
-    type: Number,
-    autoform: {
-      label: false
-    },
-    optional: true,
-    min: 1
-  },
-  puestoEstado: {
-    type: String,
-    autoform: {
-      type: 'select-radio-inline',
-      label: false,
-      options: function () {
-        return itemEstado;
-      }
-    },
-    optional: true
-  },
-  casetaCantidad: {
-    type: Number,
-    autoform: {
-      label: false
-    },
-    optional: true,
-    min: 1
-  },
-  casetaEstado: {
-    type: String,
-    autoform: {
-      type: 'select-radio-inline',
-      label: false,
-      options: function () {
-        return itemEstado;
-      }
-    },
-    optional: true
-  },
-  oficinaCantidad: {
-    type: Number,
-    autoform: {
-      label: false
-    },
-    optional: true,
-    min: 1
-  },
-  oficinaEstado: {
-    type: String,
-    autoform: {
-      type: 'select-radio-inline',
-      label: false,
-      options: function () {
-        return itemEstado;
-      }
-    },
-    optional: true
-  },
-  banioCantidad: {
-    type: Number,
-    autoform: {
-      label: false
-    },
-    optional: true,
-    min: 1
-  },
-  banioEstado: {
-    type: String,
-    autoform: {
-      type: 'select-radio-inline',
-      label: false,
-      options: function () {
-        return itemEstado;
-      }
-    },
-    optional: true
-  },
-  bodegaCantidad: {
-    type: Number,
-    autoform: {
-      label: false
-    },
-    optional: true,
-    min: 1
-  },
-  bodegaEstado: {
-    type: String,
-    autoform: {
-      type: 'select-radio-inline',
-      label: false,
-      options: function () {
-        return itemEstado;
-      }
-    },
-    optional: true
-  },
-  cuartoFrioCantidad: {
-    type: Number,
-    autoform: {
-      label: false
-    },
-    optional: true,
-    min: 1
-  },
-  cuartoFrioEstado: {
-    type: String,
-    autoform: {
-      type: 'select-radio-inline',
-      label: false,
-      options: function () {
-        return itemEstado;
-      }
-    },
-    optional: true
-  },
-  parqueaderoCantidad: {
-    type: Number,
-    autoform: {
-      label: false
-    },
-    optional: true,
-    min: 1
-  },
-  parqueaderoEstado: {
-    type: String,
-    autoform: {
-      type: 'select-radio-inline',
-      label: false,
-      options: function () {
-        return itemEstado;
-      }
-    },
-    optional: true
-  },
-  lavaderoCantidad: {
-    type: Number,
-    autoform: {
-      label: false
-    },
-    optional: true,
-    min: 1
-  },
-  lavaderoEstado: {
-    type: String,
-    autoform: {
-      type: 'select-radio-inline',
-      label: false,
-      options: function () {
-        return itemEstado;
-      }
-    },
-    optional: true
-  },
-  centroAcopioCantidad: {
-    type: Number,
-    autoform: {
-      label: false
-    },
-    optional: true,
-    min: 1
-  },
-  centroAcopioEstado: {
-    type: String,
-    autoform: {
-      type: 'select-radio-inline',
-      label: false,
-      options: function () {
-        return itemEstado;
-      }
-    },
-    optional: true
+  infraestructura: {
+    type: InfraestructuraSchema
   },
   /*** EQUIPAMIENTO CON EL QUE CUENTA ***/
-  carpasCantidad: {
-    type: Number,
-    autoform: {
-      label: false
-    },
-    optional: true,
-    min: 1
-  },
-  carpasEstado: {
-    type: String,
-    autoform: {
-      type: 'select-radio-inline',
-      label: false,
-      options: function () {
-        return itemEstado;
-      }
-    },
-    optional: true
-  },
-  mesasCantidad: {
-    type: Number,
-    autoform: {
-      label: false
-    },
-    optional: true,
-    min: 1
-  },
-  mesasEstado: {
-    type: String,
-    autoform: {
-      type: 'select-radio-inline',
-      label: false,
-      options: function () {
-        return itemEstado;
-      }
-    },
-    optional: true
-  },
-  estanteriasCantidad: {
-    type: Number,
-    autoform: {
-      label: false
-    },
-    optional: true,
-    min: 1
-  },
-  estanteriasEstado: {
-    type: String,
-    autoform: {
-      type: 'select-radio-inline',
-      label: false,
-      options: function () {
-        return itemEstado;
-      }
-    },
-    optional: true
-  },
-  sillasCantidad: {
-    type: Number,
-    autoform: {
-      label: false
-    },
-    optional: true,
-    min: 1
-  },
-  sillasEstado: {
-    type: String,
-    autoform: {
-      type: 'select-radio-inline',
-      label: false,
-      options: function () {
-        return itemEstado;
-      }
-    },
-    optional: true
-  },
-  balanzasCantidad: {
-    type: Number,
-    autoform: {
-      label: false
-    },
-    optional: true,
-    min: 1
-  },
-  balanzasEstado: {
-    type: String,
-    autoform: {
-      type: 'select-radio-inline',
-      label: false,
-      options: function () {
-        return itemEstado;
-      }
-    },
-    optional: true
-  },
-  frigorificoCantidad: {
-    type: Number,
-    autoform: {
-      label: false
-    },
-    optional: true,
-    min: 1
-  },
-  frigorificoEstado: {
-    type: String,
-    autoform: {
-      type: 'select-radio-inline',
-      label: false,
-      options: function () {
-        return itemEstado;
-      }
-    },
-    optional: true
-  },
-  parlantesCantidad: {
-    type: Number,
-    autoform: {
-      label: false
-    },
-    optional: true,
-    min: 1
-  },
-  parlantesEstado: {
-    type: String,
-    autoform: {
-      type: 'select-radio-inline',
-      label: false,
-      options: function () {
-        return itemEstado;
-      }
-    },
-    optional: true
-  },
-  microfonoCantidad: {
-    type: Number,
-    autoform: {
-      label: false
-    },
-    optional: true,
-    min: 1
-  },
-  microfonoEstado: {
-    type: String,
-    autoform: {
-      type: 'select-radio-inline',
-      label: false,
-      options: function () {
-        return itemEstado;
-      }
-    },
-    optional: true
-  },
-  cochesCargaCantidad: {
-    type: Number,
-    autoform: {
-      label: false
-    },
-    optional: true,
-    min: 1
-  },
-  cochesCargaEstado: {
-    type: String,
-    autoform: {
-      type: 'select-radio-inline',
-      label: false,
-      options: function () {
-        return itemEstado;
-      }
-    },
-    optional: true
-  },
-  hielerasCantidad: {
-    type: Number,
-    autoform: {
-      label: false
-    },
-    optional: true,
-    min: 1
-  },
-  hielerasEstado: {
-    type: String,
-    autoform: {
-      type: 'select-radio-inline',
-      label: false,
-      options: function () {
-        return itemEstado;
-      }
-    },
-    optional: true
-  },
-  gavetasCantidad: {
-    type: Number,
-    autoform: {
-      label: false
-    },
-    optional: true,
-    min: 1
-  },
-  gavetasEstado: {
-    type: String,
-    autoform: {
-      type: 'select-radio-inline',
-      label: false,
-      options: function () {
-        return itemEstado;
-      }
-    },
-    optional: true
-  },
-  tachosBasuraCantidad: {
-    type: Number,
-    autoform: {
-      label: false
-    },
-    optional: true,
-    min: 1
-  },
-  tachosBasuraEstado: {
-    type: String,
-    autoform: {
-      type: 'select-radio-inline',
-      label: false,
-      options: function () {
-        return itemEstado;
-      }
-    },
-    optional: true
-  },
-  pizarrasCantidad: {
-    type: Number,
-    autoform: {
-      label: false
-    },
-    optional: true,
-    min: 1
-  },
-  pizarrasEstado: {
-    type: String,
-    autoform: {
-      type: 'select-radio-inline',
-      label: false,
-      options: function () {
-        return itemEstado;
-      }
-    },
-    optional: true
-  },
-  rotulosCantidad: {
-    type: Number,
-    autoform: {
-      label: false
-    },
-    optional: true,
-    min: 1
-  },
-  rotulosEstado: {
-    type: String,
-    autoform: {
-      type: 'select-radio-inline',
-      label: false,
-      options: function () {
-        return itemEstado;
-      }
-    },
-    optional: true
-  },
-  escobasCantidad: {
-    type: Number,
-    autoform: {
-      label: false
-    },
-    optional: true,
-    min: 1
-  },
-  escobasEstado: {
-    type: String,
-    autoform: {
-      type: 'select-radio-inline',
-      label: false,
-      options: function () {
-        return itemEstado;
-      }
-    },
-    optional: true
-  },
-  palasBasuraCantidad: {
-    type: Number,
-    autoform: {
-      label: false
-    },
-    optional: true,
-    min: 1
-  },
-  palasBasuraEstado: {
-    type: String,
-    autoform: {
-      type: 'select-radio-inline',
-      label: false,
-      options: function () {
-        return itemEstado;
-      }
-    },
-    optional: true
-  },
-  trapeadoresCantidad: {
-    type: Number,
-    autoform: {
-      label: false
-    },
-    optional: true,
-    min: 1
-  },
-  trapeadoresEstado: {
-    type: String,
-    autoform: {
-      type: 'select-radio-inline',
-      label: false,
-      options: function () {
-        return itemEstado;
-      }
-    },
-    optional: true
+  equipamiento: {
+    type: EquipamientoSchema
   },
   /*** TIPOS DE PRODUCTOS QUE SE COMERCIALIZAN ***/
   tiposProductosComercializan: {
+    optional: true,
     type: [String],
     autoform: {
       type: 'select-checkbox',
@@ -1008,8 +336,7 @@ Cialcos.attachSchema(new SimpleSchema({
           {label: 'Otros (insumos, plantas)', value: 'Otros (insumos, plantas)'}
         ];
       }
-    },
-    optional: true
+    }
   },
   /*estado: {
    type: String,
@@ -1026,8 +353,8 @@ Cialcos.attachSchema(new SimpleSchema({
    },*/
   /*** MEDIOS TRADICIONALES DE DIFUSIÓN ***/
   volantesFrecuencia: {
-    type: String,
     optional: true,
+    type: String,
     autoform: {
       type: 'select',
       label: false,
@@ -1038,8 +365,8 @@ Cialcos.attachSchema(new SimpleSchema({
     }
   },
   afichesFrecuencia: {
-    type: String,
     optional: true,
+    type: String,
     autoform: {
       type: 'select',
       label: false,
@@ -1050,8 +377,8 @@ Cialcos.attachSchema(new SimpleSchema({
     }
   },
   perifoneoFrecuencia: {
-    type: String,
     optional: true,
+    type: String,
     autoform: {
       type: 'select',
       label: false,
@@ -1062,8 +389,8 @@ Cialcos.attachSchema(new SimpleSchema({
     }
   },
   periodicoFrecuencia: {
-    type: String,
     optional: true,
+    type: String,
     autoform: {
       type: 'select',
       label: false,
@@ -1074,8 +401,8 @@ Cialcos.attachSchema(new SimpleSchema({
     }
   },
   radioFrecuencia: {
-    type: String,
     optional: true,
+    type: String,
     autoform: {
       type: 'select',
       label: false,
@@ -1086,8 +413,8 @@ Cialcos.attachSchema(new SimpleSchema({
     }
   },
   televisionFrecuencia: {
-    type: String,
     optional: true,
+    type: String,
     autoform: {
       type: 'select',
       label: false,
@@ -1099,8 +426,8 @@ Cialcos.attachSchema(new SimpleSchema({
   },
   /*** MEDIOS DIGITALES DE DIFUSIÓN ***/
   listaDistribucionFrecuencia: {
-    type: String,
     optional: true,
+    type: String,
     autoform: {
       type: 'select',
       label: false,
@@ -1111,15 +438,15 @@ Cialcos.attachSchema(new SimpleSchema({
     }
   },
   listaDistribucion: {
-    type: String,
     optional: true,
+    type: String,
     autoform: {
       label: false
     }
   },
   paginaWebFrecuencia: {
-    type: String,
     optional: true,
+    type: String,
     autoform: {
       type: 'select',
       label: false,
@@ -1130,15 +457,16 @@ Cialcos.attachSchema(new SimpleSchema({
     }
   },
   paginaWeb: {
-    type: String,
     optional: true,
+    type: String,
+    regEx: /^(http\:\/\/|https\:\/\/)?([a-z0-9][a-z0-9\-]*\.)+[a-z0-9][a-z0-9\-]*$/,
     autoform: {
       label: false
     }
   },
   facebookFrecuencia: {
-    type: String,
     optional: true,
+    type: String,
     autoform: {
       type: 'select',
       label: false,
@@ -1149,15 +477,16 @@ Cialcos.attachSchema(new SimpleSchema({
     }
   },
   facebook: {
-    type: String,
     optional: true,
+    type: String,
     autoform: {
       label: false
     }
   },
   twitterFrecuencia: {
-    type: String,
     optional: true,
+    type: String,
+    regEx: /@([A-Za-z0-9_]+)/,
     autoform: {
       type: 'select',
       label: false,
@@ -1168,8 +497,8 @@ Cialcos.attachSchema(new SimpleSchema({
     }
   },
   twitter: {
-    type: String,
     optional: true,
+    type: String,
     autoform: {
       label: false
     }
@@ -1181,9 +510,9 @@ Cialcos.attachSchema(new SimpleSchema({
     min: 1
   },
   organizacionesCialco: {
+    optional: true,
     type: [Object],
     label: 'Organizaciones',
-    optional: true,
     minCount: 1
   },
   'organizacionesCialco.$.nombre': {
@@ -1196,8 +525,8 @@ Cialcos.attachSchema(new SimpleSchema({
     }
   },
   'organizacionesCialco.$.representante': {
-    type: String,
     optional: true,
+    type: String,
     label: 'Nombre del representante',
     autoform: {
       afFormGroup: {
@@ -1206,8 +535,8 @@ Cialcos.attachSchema(new SimpleSchema({
     }
   },
   'organizacionesCialco.$.datoContacto': {
-    type: String,
     optional: true,
+    type: String,
     label: 'Dato de contacto',
     autoform: {
       afFormGroup: {
@@ -1216,14 +545,15 @@ Cialcos.attachSchema(new SimpleSchema({
     }
   },
   observaciones: {
+    optional: true,
     type: String,
     label: 'Observaciones',
-    optional: true,
     autoform: {
       rows: 4
     }
   },
   responsable: {
+    optional: true,
     type: String,
     autoValue: function () {
       if (this.isInsert) {
@@ -1237,10 +567,10 @@ Cialcos.attachSchema(new SimpleSchema({
     autoform: {
       type: 'hidden',
       label: false
-    },
-    optional: true
+    }
   },
   createdBy: {
+    optional: true,
     type: String,
     autoValue: function () {
       if (this.isInsert) {
@@ -1254,8 +584,7 @@ Cialcos.attachSchema(new SimpleSchema({
     autoform: {
       type: 'hidden',
       label: false
-    },
-    optional: true
+    }
   },
   createdAt: {
     type: String,

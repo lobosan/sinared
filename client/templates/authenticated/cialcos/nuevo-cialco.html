@@ -7,11 +7,13 @@
             {{#autoForm collection='Cialcos' id='insertCialcoForm' type='insert'}}
               <fieldset class="custom-fieldset">
                 <legend class="custom-legend">Datos generales</legend>
-                {{> afQuickField name='fechaLevantamientoDatos' datePickerOptions=datePickerDefaultOptions}}
-                {{> afQuickField name='nombreLevantadorDatos'}}
-                {{> afQuickField name='nombreCialco'}}
-                {{> afQuickField name='diasFuncionamiento'}}
                 <div class="row">
+                  <div class="col-sm-6 col-md-4">{{> afQuickField name='fechaLevantamientoDatos' datePickerOptions=datePickerDefaultOptions}}</div>
+                  <div class="col-sm-6 col-md-8">{{> afQuickField name='nombreLevantadorDatos'}}</div>
+                </div>
+                {{> afQuickField name='nombreCialco'}}
+                <div class="row">
+                  <div class="col-sm-6 col-md-8">{{> afQuickField name='diasFuncionamiento'}}</div>
                   <div class="col-sm-3 col-md-2">{{> afQuickField name='horaInicio' id='horaInicio' dateTimePickerOptions=timePickerOptions}}</div>
                   <div class="col-sm-3 col-md-2">{{> afQuickField name='horaFin' id='horaFin' dateTimePickerOptions=timePickerOptions}}</div>
                 </div>
@@ -20,20 +22,7 @@
                 <legend class="custom-legend">Tipo de CIALCO</legend>
                 {{> afQuickField name='tipo'}}
               </fieldset>
-              <fieldset class="custom-fieldset">
-                <legend class="custom-legend">Ubicación</legend>
-                {{> afQuickField name='zonaID'}}
-                {{> afQuickField name='provinciaID'}}
-                {{> afQuickField name='cantonID'}}
-                {{> afQuickField name='parroquiaID'}}
-                {{> afQuickField name='sectorComunidad'}}
-                {{> afQuickField name='puntoReferencia'}}
-                <div class="row">
-                  <div class="col-md-10">{{> afQuickField name='callePrincipalCarretera'}}</div>
-                  <div class="col-md-2">{{> afQuickField name='numeroPredioLote'}}</div>
-                </div>
-                {{> afQuickField name='calleSecundaria'}}
-              </fieldset>
+              {{> ubicacion}}
               <fieldset class="custom-fieldset">
                 <legend class="custom-legend">Datos del representante del CIALCO</legend>
                 <div class="row">
@@ -64,173 +53,8 @@
                 <legend class="custom-legend">Servicios con los que cuenta el CIALCO</legend>
                 {{> afQuickField name='servicios'}}
               </fieldset>
-              <fieldset class="custom-fieldset">
-                <legend class="custom-legend">Infraestructura con la que cuenta el CIALCO</legend>
-                <div class="row col-md-6 pull-left">
-                  <table class="table table-striped table-condensed cialco-item-estado">
-                    <thead>
-                      <tr>
-                        <th class="col-sm-2 col-md-2">Categoría</th>
-                        <th class="col-sm-1 col-md-1">Cantidad</th>
-                        <th class="col-sm-3 col-md-3">Estado</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Cubierta</td>
-                        <td>{{> afQuickField name='cubiertaCantidad'}}</td>
-                        <td>{{> afQuickField name='cubiertaEstado'}}</td>
-                      </tr>
-                      <tr>
-                        <td>Puestos individuales</td>
-                        <td>{{> afQuickField name='puestoCantidad'}}</td>
-                        <td>{{> afQuickField name='puestoEstado'}}</td>
-                      </tr>
-                      <tr>
-                        <td>Casetas</td>
-                        <td>{{> afQuickField name='casetaCantidad'}}</td>
-                        <td>{{> afQuickField name='casetaEstado'}}</td>
-                      </tr>
-                      <tr>
-                        <td>Oficina</td>
-                        <td>{{> afQuickField name='oficinaCantidad'}}</td>
-                        <td>{{> afQuickField name='oficinaEstado'}}</td>
-                      </tr>
-                      <tr>
-                        <td>Baños o baterías sanitarias</td>
-                        <td>{{> afQuickField name='banioCantidad'}}</td>
-                        <td>{{> afQuickField name='banioEstado'}}</td>
-                      </tr>
-                      <tr>
-                        <td>Bodega</td>
-                        <td>{{> afQuickField name='bodegaCantidad'}}</td>
-                        <td>{{> afQuickField name='bodegaEstado'}}</td>
-                      </tr>
-                      <tr>
-                        <td>Cuarto frío</td>
-                        <td>{{> afQuickField name='cuartoFrioCantidad'}}</td>
-                        <td>{{> afQuickField name='cuartoFrioEstado'}}</td>
-                      </tr>
-                      <tr>
-                        <td>Parqueaderos</td>
-                        <td>{{> afQuickField name='parqueaderoCantidad'}}</td>
-                        <td>{{> afQuickField name='parqueaderoEstado'}}</td>
-                      </tr>
-                      <tr>
-                        <td>Lavaderos</td>
-                        <td>{{> afQuickField name='lavaderoCantidad'}}</td>
-                        <td>{{> afQuickField name='lavaderoEstado'}}</td>
-                      </tr>
-                      <tr>
-                        <td>Centro de acopio</td>
-                        <td>{{> afQuickField name='centroAcopioCantidad'}}</td>
-                        <td>{{> afQuickField name='centroAcopioEstado'}}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </fieldset>
-              <fieldset class="custom-fieldset">
-                <legend class="custom-legend">Equipamiento con el que cuenta el CIALCO</legend>
-                <div class="row col-md-6 pull-left">
-                  <table class="table table-striped table-condensed cialco-item-estado">
-                    <thead>
-                      <tr>
-                        <th class="col-sm-2 col-md-2">Categoría</th>
-                        <th class="col-sm-1 col-md-1">Cantidad</th>
-                        <th class="col-sm-3 col-md-3">Estado</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Carpas</td>
-                        <td>{{> afQuickField name='carpasCantidad'}}</td>
-                        <td>{{> afQuickField name='carpasEstado'}}</td>
-                      </tr>
-                      <tr>
-                        <td>Mesas</td>
-                        <td>{{> afQuickField name='mesasCantidad'}}</td>
-                        <td>{{> afQuickField name='mesasEstado'}}</td>
-                      </tr>
-                      <tr>
-                        <td>Estanterías</td>
-                        <td>{{> afQuickField name='estanteriasCantidad'}}</td>
-                        <td>{{> afQuickField name='estanteriasEstado'}}</td>
-                      </tr>
-                      <tr>
-                        <td>Sillas</td>
-                        <td>{{> afQuickField name='sillasCantidad'}}</td>
-                        <td>{{> afQuickField name='sillasEstado'}}</td>
-                      </tr>
-                      <tr>
-                        <td>Balanzas</td>
-                        <td>{{> afQuickField name='balanzasCantidad'}}</td>
-                        <td>{{> afQuickField name='balanzasEstado'}}</td>
-                      </tr>
-                      <tr>
-                        <td>Frigorífico</td>
-                        <td>{{> afQuickField name='frigorificoCantidad'}}</td>
-                        <td>{{> afQuickField name='frigorificoEstado'}}</td>
-                      </tr>
-                      <tr>
-                        <td>Parlantes</td>
-                        <td>{{> afQuickField name='parlantesCantidad'}}</td>
-                        <td>{{> afQuickField name='parlantesEstado'}}</td>
-                      </tr>
-                      <tr>
-                        <td>Micrófono</td>
-                        <td>{{> afQuickField name='microfonoCantidad'}}</td>
-                        <td>{{> afQuickField name='microfonoEstado'}}</td>
-                      </tr>
-                      <tr>
-                        <td>Coches de carga</td>
-                        <td>{{> afQuickField name='cochesCargaCantidad'}}</td>
-                        <td>{{> afQuickField name='cochesCargaEstado'}}</td>
-                      </tr>
-                      <tr>
-                        <td>Hieleras (coolers)</td>
-                        <td>{{> afQuickField name='hielerasCantidad'}}</td>
-                        <td>{{> afQuickField name='hielerasEstado'}}</td>
-                      </tr>
-                      <tr>
-                        <td>Gavetas</td>
-                        <td>{{> afQuickField name='gavetasCantidad'}}</td>
-                        <td>{{> afQuickField name='gavetasEstado'}}</td>
-                      </tr>
-                      <tr>
-                        <td>Tachos de basura</td>
-                        <td>{{> afQuickField name='tachosBasuraCantidad'}}</td>
-                        <td>{{> afQuickField name='tachosBasuraEstado'}}</td>
-                      </tr>
-                      <tr>
-                        <td>Pizarras para exhibición de precios</td>
-                        <td>{{> afQuickField name='pizarrasCantidad'}}</td>
-                        <td>{{> afQuickField name='pizarrasEstado'}}</td>
-                      </tr>
-                      <tr>
-                        <td>Rótulos o banners de identificación</td>
-                        <td>{{> afQuickField name='rotulosCantidad'}}</td>
-                        <td>{{> afQuickField name='rotulosEstado'}}</td>
-                      </tr>
-                      <tr>
-                        <td>Escobas</td>
-                        <td>{{> afQuickField name='escobasCantidad'}}</td>
-                        <td>{{> afQuickField name='escobasEstado'}}</td>
-                      </tr>
-                      <tr>
-                        <td>Palas de basura</td>
-                        <td>{{> afQuickField name='palasBasuraCantidad'}}</td>
-                        <td>{{> afQuickField name='palasBasuraEstado'}}</td>
-                      </tr>
-                      <tr>
-                        <td>Trapeadores</td>
-                        <td>{{> afQuickField name='trapeadoresCantidad'}}</td>
-                        <td>{{> afQuickField name='trapeadoresEstado'}}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </fieldset>
+              {{> infraestructura}}
+              {{> equipamiento}}
               <fieldset class="custom-fieldset">
                 <legend class="custom-legend">Tipos de productos que se comercializan en el CIALCO</legend>
                 {{> afQuickField name='tiposProductosComercializan'}}
@@ -274,7 +98,6 @@
                   </table>
                 </div>
               </fieldset>
-
               <fieldset class="custom-fieldset">
                 <legend class="custom-legend">Medios digitales de difusión</legend>
                 <div class="row col-md-8 pull-left">

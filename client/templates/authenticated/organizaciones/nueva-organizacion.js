@@ -27,18 +27,16 @@ Template.nuevaOrganizacion.events({
             $('#orgCedulaRepresentante').val('');
             $('#orgNombreRepresentante').val('');
             $('textarea[name="direccion"]').val('');
-            $('input[name="telefonoFijo1"]').val('');
+            $('input[name="telefonoFijoRepresentante"]').val('');
             $('input[name="telefonoFijo2"]').val('');
-            $('input[name="telefonoFijo3"]').val('');
           } else {
             $('input[name="nombreOrganizacion"]').val(response.nombreOrganizacion);
             $('input[name="actividadEconomica"]').val(response.actividadEconomica);
             $('#orgCedulaRepresentante').val(response.cedulaRepresentante);
             $('#orgNombreRepresentante').val(response.nombreRepresentante);
             $('textarea[name="direccion"]').val(response.direccion);
-            $('input[name="telefonoFijo1"]').val(response.telefonoFijo1);
+            $('input[name="telefonoFijoRepresentante"]').val(response.telefonoFijo1);
             $('input[name="telefonoFijo2"]').val(response.telefonoFijo2);
-            $('input[name="telefonoFijo3"]').val(response.telefonoFijo3);
           }
         }
       });

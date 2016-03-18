@@ -1,0 +1,68 @@
+<template name="infraestructura">
+  <fieldset class="custom-fieldset">
+    <legend class="custom-legend">Infraestructura con la que cuenta el CIALCO</legend>
+    <div class="row col-md-6 pull-left">
+      <table class="table table-striped table-condensed cialco-item-estado">
+        <thead>
+        <tr>
+          <th class="col-sm-2 col-md-2">Categoría</th>
+          <th class="col-sm-1 col-md-1">Cantidad</th>
+          <th class="col-sm-3 col-md-3">Estado</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>Cubierta</td>
+          <td>{{> afQuickField name='infraestructura.cubiertaCantidad'}}</td>
+          <td>{{> afQuickField name='infraestructura.cubiertaEstado'}}</td>
+        </tr>
+        <tr>
+          <td>Puestos individuales</td>
+          <td>{{> afQuickField name='infraestructura.puestoCantidad'}}</td>
+          <td>{{> afQuickField name='infraestructura.puestoEstado'}}</td>
+        </tr>
+        <tr>
+          <td>Casetas</td>
+          <td>{{> afQuickField name='infraestructura.casetaCantidad'}}</td>
+          <td>{{> afQuickField name='infraestructura.casetaEstado'}}</td>
+        </tr>
+        <tr>
+          <td>Oficina</td>
+          <td>{{> afQuickField name='infraestructura.oficinaCantidad'}}</td>
+          <td>{{> afQuickField name='infraestructura.oficinaEstado'}}</td>
+        </tr>
+        <tr>
+          <td>Baños o baterías sanitarias</td>
+          <td>{{> afQuickField name='infraestructura.banioCantidad'}}</td>
+          <td>{{> afQuickField name='infraestructura.banioEstado'}}</td>
+        </tr>
+        <tr>
+          <td>Bodega</td>
+          <td>{{> afQuickField name='infraestructura.bodegaCantidad'}}</td>
+          <td>{{> afQuickField name='infraestructura.bodegaEstado'}}</td>
+        </tr>
+        <tr>
+          <td>Cuarto frío</td>
+          <td>{{> afQuickField name='infraestructura.cuartoFrioCantidad'}}</td>
+          <td>{{> afQuickField name='infraestructura.cuartoFrioEstado'}}</td>
+        </tr>
+        <tr>
+          <td>Parqueaderos</td>
+          <td>{{> afQuickField name='infraestructura.parqueaderoCantidad'}}</td>
+          <td>{{> afQuickField name='infraestructura.parqueaderoEstado'}}</td>
+        </tr>
+        <tr>
+          <td>Lavaderos</td>
+          <td>{{> afQuickField name='infraestructura.lavaderoCantidad'}}</td>
+          <td>{{> afQuickField name='infraestructura.lavaderoEstado'}}</td>
+        </tr>
+        <tr>
+          <td>Centro de acopio</td>
+          <td>{{> afQuickField name='infraestructura.centroAcopioCantidad'}}</td>
+          <td>{{> afQuickField name='infraestructura.centroAcopioEstado'}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </fieldset>
+</template>
