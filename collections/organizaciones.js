@@ -3,87 +3,11 @@ SubsManagerOrganizaciones = new SubsManager();
 
 Organizaciones.attachSchema(new SimpleSchema({
   /*** DATOS GENERALES ***/
-  fechaLevantamientoDatos: {
+  nombreOrganizacion: {
     type: String,
-    label: 'Fecha de levantamiento de datos',
-    autoform: {
-      afFieldInput: {
-        type: 'bootstrap-datepicker'
-      }
-    }
-  },
-  anio: {
-    optional: true,
-    type: Number,
-    autoValue: function () {
-      if (this.isInsert) {
-        let fechaLevantamientoDatos = this.field('fechaLevantamientoDatos').value;
-        let fecha = fechaLevantamientoDatos.split('-');
-        return Number(fecha[0]);
-      } else if (this.isUpsert) {
-        let fechaLevantamientoDatos = this.field('fechaLevantamientoDatos').value;
-        let fecha = fechaLevantamientoDatos.split('-');
-        return Number(fecha[0]);
-      } else {
-        this.unset();
-      }
-    },
-    autoform: {
-      type: 'hidden',
-      label: false
-    }
-  },
-  cuatrimestre: {
-    optional: true,
-    type: Number,
-    autoValue: function () {
-      if (this.isInsert) {
-        let fechaLevantamientoDatos = this.field('fechaLevantamientoDatos').value;
-        if (fechaLevantamientoDatos) {
-          let fecha = fechaLevantamientoDatos.split('-');
-          let month = fecha[1];
-          if (month >= 1 && month <= 4) return 1;
-          if (month >= 5 && month <= 8) return 2;
-          if (month >= 9 && month <= 12) return 3;
-        }
-      } else if (this.isUpsert) {
-        let fechaLevantamientoDatos = this.field('fechaLevantamientoDatos').value;
-        if (fechaLevantamientoDatos) {
-          let fecha = fechaLevantamientoDatos.split('-');
-          let month = fecha[1];
-          if (month >= 1 && month <= 4) return 1;
-          if (month >= 5 && month <= 8) return 2;
-          if (month >= 9 && month <= 12) return 3;
-        }
-      } else {
-        this.unset();
-      }
-    },
-    autoform: {
-      type: 'hidden',
-      label: false
-    }
-  },
-  nombreLevantadorDatos: {
-    type: String,
-    label: 'Nombre de quien levanta los datos'
-  },
-  hombresOrganizacion: {
-    optional: true,
-    type: Number,
-    label: 'Número de hombres en la organización',
-    min: 0
-  },
-  mujeresOrganizacion: {
-    optional: true,
-    type: Number,
-    label: 'Número de mujeres en la organización',
-    min: 0
-  },
-  totalProductoresOrganizacion: {
-    type: Number,
-    label: 'Total de productores en la organización',
-    min: 0
+    label: 'Nombre de la organización',
+    index: true,
+    unique: true
   },
   ruc: {
     optional: true,
@@ -129,11 +53,43 @@ Organizaciones.attachSchema(new SimpleSchema({
       }
     }
   },
-  nombreOrganizacion: {
+  direccion: {
+    optional: true,
     type: String,
-    label: 'Nombre de la organización',
-    index: true,
-    unique: true
+    label: 'Dirección de la organización',
+    autoform: {
+      rows: 2
+    }
+  },
+  hombresOrganizacion: {
+    optional: true,
+    type: Number,
+    label: 'Número de hombres en la organización',
+    min: 0
+  },
+  mujeresOrganizacion: {
+    optional: true,
+    type: Number,
+    label: 'Número de mujeres en la organización',
+    min: 0
+  },
+  totalProductoresOrganizacion: {
+    type: Number,
+    label: 'Total de productores en la organización',
+    min: 0
+  },
+  transportePropio: {
+    type: String,
+    label: 'Tiene transporte propio',
+    autoform: {
+      type: 'select-radio-inline',
+      options: function () {
+        return [
+          {label: 'Si', value: 'Si'},
+          {label: 'No', value: 'No'}
+        ];
+      }
+    }
   },
   actividadEconomica: {
     optional: true,
@@ -151,14 +107,6 @@ Organizaciones.attachSchema(new SimpleSchema({
   nombreRepresentante: {
     type: String,
     label: 'Nombre del representante'
-  },
-  direccion: {
-    optional: true,
-    type: String,
-    label: 'Dirección de la organización',
-    autoform: {
-      rows: 2
-    }
   },
   telefonoFijoRepresentante: {
     optional: true,
@@ -220,11 +168,14 @@ Organizaciones.attachSchema(new SimpleSchema({
     regEx: /@([A-Za-z0-9_]+)/,
     min: 6
   },
+  fechaResponsable: {
+    type: FechaResponsableSchema
+  },
   /*** UBICACIÓN ***/
   ubicacion: {
     type: UbicacionSchema
   },
-  productoresCialco: {
+  /*productoresCialco: {
     optional: true,
     type: [Object],
     label: 'Productores de la organización vinculados a CIALCOs'
@@ -290,8 +241,8 @@ Organizaciones.attachSchema(new SimpleSchema({
       type: 'hidden',
       label: false
     }
-  },
-  /*** TIPO DE CIALCO ***/
+  },*/
+  /*** TIPOS DE CIALCO EN LOS QUE PARTICIPA ***/
   cialcosParticipa: {
     type: [String],
     autoform: {
@@ -301,12 +252,13 @@ Organizaciones.attachSchema(new SimpleSchema({
         return [
           {label: 'Abastecimiento a catering', value: 'Abastecimiento a catering'},
           {label: 'Abastecimiento a MIPYMES', value: 'Abastecimiento a MIPYMES'},
+          {label: 'Abastecimiento a hoteles', value: 'Abastecimiento a hoteles'},
           {label: 'Abastecimiento a restaurantes locales', value: 'Abastecimiento a restaurantes locales'},
           {label: 'Abastecimiento a tiendas de barrio', value: 'Abastecimiento a tiendas de barrio'},
           {label: 'Canasta de entrega dispersa', value: 'Canasta de entrega dispersa'},
           {label: 'Canasta de entrega en punto único', value: 'Canasta de entrega en punto único'},
           {label: 'Compra pública directa', value: 'Compra pública directa'},
-          {label: 'Compra pública a través de la UNA-EP (Unidad Nacional de Almacenamiento - Empresa Pública)', value: 'Compra pública a través de la UNA-EP (Unidad Nacional de Almacenamiento - Empresa Pública)'},
+          {label: 'Compra pública a través de la UNA (Unidad Nacional de Almacenamiento)', value: 'Compra pública a través de la UNA (Unidad Nacional de Almacenamiento)'},
           {label: 'Compra pública a través del SERCOP (Servicio Nacional de Contratación Pública)', value: 'Compra pública a través del SERCOP (Servicio Nacional de Contratación Pública)'},
           {label: 'Espacio de venta en mercado', value: 'Espacio de venta en mercado'},
           {label: 'Exportación campesina', value: 'Exportación campesina'},
@@ -314,6 +266,26 @@ Organizaciones.attachSchema(new SimpleSchema({
           {label: 'Tienda comunitaria o de productores', value: 'Tienda comunitaria o de productores'},
           {label: 'Turismo comunitario o agroturismo', value: 'Turismo comunitario o agroturismo'},
           {label: 'Venta directa en finca (pie de finca)', value: 'Venta directa en finca (pie de finca)'},
+          {label: 'Otro', value: 'Otro'}
+        ];
+      }
+    }
+  },
+  /*** OTROS CANALES DE COMERCIALIZACIÓN QUE EMPLEA ***/
+  otrosCanalesComercializacion: {
+    type: [String],
+    autoform: {
+      type: 'select-checkbox',
+      label: false,
+      options: function () {
+        return [
+          {label: 'Mercado municipal', value: 'Mercado municipal'},
+          {label: 'Supermercados locales', value: 'Supermercados locales'},
+          {label: 'Cadenas de supermercados', value: 'Cadenas de supermercados'},
+          {label: 'Intermediarios', value: 'Intermediarios'},
+          {label: 'Ferias libres', value: 'Ferias libres'},
+          {label: 'Cadenas de restaurantes', value: 'Cadenas de restaurantes'},
+          {label: 'Exportación', value: 'Exportación'},
           {label: 'Otro', value: 'Otro'}
         ];
       }

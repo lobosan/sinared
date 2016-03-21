@@ -7,17 +7,7 @@
             {{#autoForm collection='Organizaciones' id='insertOrganizacionForm' type='insert'}}
               <fieldset class="custom-fieldset">
                 <legend class="custom-legend">Datos generales</legend>
-                <div class="row">
-                  <div class="col-sm-6 col-md-4">{{> afQuickField name='fechaLevantamientoDatos' datePickerOptions=datePickerDefaultOptions}}</div>
-                  <div class="col-sm-6 col-md-8">{{> afQuickField name='nombreLevantadorDatos'}}</div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-6 col-md-4">{{> afQuickField name='hombresOrganizacion'}}</div>
-                  <div class="col-sm-6 col-md-4">{{> afQuickField name='mujeresOrganizacion'}}</div>
-                </div>
-              </fieldset>
-              <fieldset class="custom-fieldset">
-                <legend class="custom-legend">Datos de contacto de la organización</legend>
+                {{> afQuickField name='nombreOrganizacion'}}
                 <div class="row">
                   <div class="col-sm-6 col-md-4">{{> afQuickField name='ruc'}}</div>
                 </div>
@@ -29,13 +19,17 @@
                   <div class="col-sm-6 col-md-4">{{> afQuickField name='registroSeps'}}</div>
                   <div class="col-sm-6 col-md-4">{{> afQuickField name='fechaRegistroSEPS' datePickerOptions=datePickerDefaultOptions}}</div>
                 </div>
-                {{> afQuickField name='nombreOrganizacion'}}
+                {{> afQuickField name='direccion'}}
+                <div class="row">
+                  <div class="col-sm-6 col-md-4">{{> afQuickField name='hombresOrganizacion'}}</div>
+                  <div class="col-sm-6 col-md-4">{{> afQuickField name='mujeresOrganizacion'}}</div>
+                </div>
+                {{> afQuickField name='transportePropio'}}
                 {{> afQuickField name='actividadEconomica'}}
                 <div class="row">
                   <div class="col-md-3">{{> afQuickField name='cedulaRepresentante' id='orgCedulaRepresentante'}}</div>
                   <div class="col-md-9">{{> afQuickField name='nombreRepresentante' id='orgNombreRepresentante'}}</div>
                 </div>
-                {{> afQuickField name='direccion'}}
                 <div class="row">
                   <div class="col-sm-6 col-md-3">{{> afQuickField name='telefonoFijoRepresentante'}}</div>
                   <div class="col-sm-6 col-md-3">{{> afQuickField name='telefonoFijo2'}}</div>
@@ -50,16 +44,23 @@
                   <div class="col-sm-6 col-md-3">{{> afQuickField name='facebook'}}</div>
                   <div class="col-sm-6 col-md-3">{{> afQuickField name='twitter'}}</div>
                 </div>
+                <div class="row">
+                  <div class="col-sm-6 col-md-4">{{> afQuickField name='fechaResponsable.fechaLevantamientoDatos' datePickerOptions=datePickerDefaultOptions}}</div>
+                  <div class="col-sm-6 col-md-8">{{> afQuickField name='fechaResponsable.nombreLevantadorDatos'}}</div>
+                </div>
               </fieldset>
               <fieldset class="custom-fieldset">
                 <legend class="custom-legend">Ubicación de la organización</legend>
                 {{> ubicacion}}
               </fieldset>
               <fieldset class="custom-fieldset">
-                <legend class="custom-legend">CIALCOs en los que participa</legend>
+                <legend class="custom-legend">Tipos de CIALCO en los que participa</legend>
                 {{> afQuickField name='cialcosParticipa'}}
               </fieldset>
-              {{> afQuickField name='productoresCialco'}}
+              <fieldset class="custom-fieldset">
+                <legend class="custom-legend">Otros canales de comercialización que emplea</legend>
+                {{> afQuickField name='otrosCanalesComercializacion'}}
+              </fieldset>
               {{> afQuickField name='observaciones'}}
               <button type='submit' class='btn btn-success'>GUARDAR</button>
             {{/autoForm}}

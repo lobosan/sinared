@@ -115,7 +115,7 @@ Cialcos.attachSchema(new SimpleSchema({
           {label: 'Canasta de entrega dispersa', value: 'Canasta de entrega dispersa'},
           {label: 'Canasta de entrega en punto único', value: 'Canasta de entrega en punto único'},
           {label: 'Compra pública directa', value: 'Compra pública directa'},
-          {label: 'Compra pública a través de la UNA-EP (Unidad Nacional de Almacenamiento - Empresa Pública)', value: 'Compra pública a través de la UNA-EP (Unidad Nacional de Almacenamiento - Empresa Pública)'},
+          {label: 'Compra pública a través de la UNA (Unidad Nacional de Almacenamiento)', value: 'Compra pública a través de la UNA (Unidad Nacional de Almacenamiento)'},
           {label: 'Compra pública a través del SERCOP (Servicio Nacional de Contratación Pública)', value: 'Compra pública a través del SERCOP (Servicio Nacional de Contratación Pública)'},
           {label: 'Espacio de venta en mercado', value: 'Espacio de venta en mercado'},
           {label: 'Exportación campesina', value: 'Exportación campesina'},
