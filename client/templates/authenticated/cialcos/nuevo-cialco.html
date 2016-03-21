@@ -7,23 +7,31 @@
             {{#autoForm collection='Cialcos' id='insertCialcoForm' type='insert'}}
               <fieldset class="custom-fieldset">
                 <legend class="custom-legend">Datos generales</legend>
-                <div class="row">
-                  <div class="col-sm-6 col-md-4">{{> afQuickField name='fechaLevantamientoDatos' datePickerOptions=datePickerDefaultOptions}}</div>
-                  <div class="col-sm-6 col-md-8">{{> afQuickField name='nombreLevantadorDatos'}}</div>
-                </div>
                 {{> afQuickField name='nombreCialco'}}
                 <div class="row">
                   <div class="col-sm-6 col-md-8">{{> afQuickField name='diasFuncionamiento'}}</div>
                   <div class="col-sm-3 col-md-2">{{> afQuickField name='horaInicio' id='horaInicio' dateTimePickerOptions=timePickerOptions}}</div>
                   <div class="col-sm-3 col-md-2">{{> afQuickField name='horaFin' id='horaFin' dateTimePickerOptions=timePickerOptions}}</div>
                 </div>
+                {{> afQuickField name='reglamento'}}
+                {{> afQuickField name='directiva'}}
+                {{> afQuickField name='registroVentasProductor'}}
+                {{> afQuickField name='sistemaVeedurias'}}
+                {{> afQuickField name='montoEstimadoVentas'}}
+                <div class="row">
+                  <div class="col-sm-6 col-md-4">{{> afQuickField name='fechaResponsable.fechaLevantamientoDatos' datePickerOptions=datePickerDefaultOptions}}</div>
+                  <div class="col-sm-6 col-md-8">{{> afQuickField name='fechaResponsable.nombreLevantadorDatos'}}</div>
+                </div>
               </fieldset>
               <fieldset class="custom-fieldset">
                 <legend class="custom-legend">Tipo de CIALCO</legend>
                 {{> afQuickField name='tipo'}}
               </fieldset>
-              {{> ubicacion}}
               <fieldset class="custom-fieldset">
+                <legend class="custom-legend">Ubicación del CIALCO</legend>
+                {{> ubicacion}}
+              </fieldset>
+              <!--<fieldset class="custom-fieldset">
                 <legend class="custom-legend">Datos del representante del CIALCO</legend>
                 <div class="row">
                   <div class="col-md-4">{{> afQuickField name='cedulaRepresentante' id='ciaCedulaRepresentante'}}</div>
@@ -34,16 +42,7 @@
                   <div class="col-md-4">{{> afQuickField name='celularRepresentante'}}</div>
                   <div class="col-md-4">{{> afQuickField name='emailRepresentante'}}</div>
                 </div>
-              </fieldset>
-              <fieldset class="custom-fieldset">
-                <legend class="custom-legend">Funcionamiento del CIALCO</legend>
-                {{> afQuickField name='hombresCialco'}}
-                {{> afQuickField name='mujeresCialco'}}
-                {{> afQuickField name='reglamento'}}
-                {{> afQuickField name='directiva'}}
-                {{> afQuickField name='registroVentasProductor'}}
-                {{> afQuickField name='sistemaVeedurias'}}
-              </fieldset>
+              </fieldset>-->
               <fieldset class="custom-fieldset">
                 <legend class="custom-legend">Propiedad del espacio en el que funciona el CIALCO</legend>
                 {{> afQuickField name='tipoPropiedad'}}
@@ -134,11 +133,11 @@
                   </table>
                 </div>
               </fieldset>
-              <fieldset class="custom-fieldset">
+              <!--<fieldset class="custom-fieldset">
                 <legend class="custom-legend">Organizaciones que participan en el CIALCO</legend>
                 {{> afQuickField name='numeroOrganizacionesParticipan'}}
                 {{> afQuickField name='organizacionesCialco'}}
-              </fieldset>
+              </fieldset>-->
               {{> afQuickField name='observaciones'}}
               <button type='submit' class='btn btn-success'>GUARDAR</button>
             {{/autoForm}}

@@ -1,177 +1,7 @@
 Productores = new Meteor.Collection('productores');
 
 Productores.attachSchema(new SimpleSchema({
-  anio: {
-    type: String,
-    label: 'Año',
-    autoform: {
-      type: 'select',
-      defaultValue: 2015,
-      firstOption: 'Seleccione un año',
-      options: function () {
-        return _.map(_.range(2011, new Date().getFullYear() + 1), function (value) {
-          return {label: value, value: value};
-        });
-      }
-    }
-  },
-  cuatrimestre: {
-    type: String,
-    label: 'Cuatrimestre',
-    autoform: {
-      type: 'select-radio-inline',
-      defaultValue: '3',
-      options: function () {
-        return [
-          {label: '1', value: '1'},
-          {label: '2', value: '2'},
-          {label: '3', value: '3'}
-        ];
-      }
-    }
-  },
-  zonaID: {
-    type: String,
-    label: 'Zona',
-    autoform: {
-      type: 'select',
-      firstOption: 'Seleccione una zona',
-      options: function () {
-        return DPA.find({grupo: 'Zona'}).map(function (dpa) {
-          return {label: dpa.descripcion, value: dpa.codigo};
-        });
-      }
-    }
-  },
-  zonaNombre: {
-    type: String,
-    autoValue: function () {
-      if (this.isInsert) {
-        let codigoZona = this.field('zonaID').value;
-        if (codigoZona)
-          return DPA.findOne({codigo: codigoZona}).descripcion;
-      } else if (this.isUpsert) {
-        return {$setOnInsert: DPA.findOne({codigo: codigoZona}).descripcion};
-      } else {
-        this.unset();
-      }
-    },
-    autoform: {
-      type: 'hidden',
-      label: false
-    },
-    optional: true
-  },
-  provinciaID: {
-    type: String,
-    label: 'Provincia',
-    autoform: {
-      type: 'select',
-      firstOption: 'Seleccione una provincia',
-      options: function () {
-        var codigoZona = AutoForm.getFieldValue('zonaID');
-        var provincias = new RegExp('^' + codigoZona + '[\\d]{2}$');
-        return DPA.find({codigo: {$regex: provincias}}).map(function (dpa) {
-          return {label: dpa.descripcion, value: dpa.codigo};
-        });
-      }
-    }
-  },
-  provinciaNombre: {
-    type: String,
-    autoValue: function () {
-      if (this.isInsert) {
-        let codigoProvincia = this.field('provinciaID').value;
-        if (codigoProvincia)
-          return DPA.findOne({codigo: codigoProvincia}).descripcion;
-      } else if (this.isUpsert) {
-        return {$setOnInsert: DPA.findOne({codigo: codigoProvincia}).descripcion};
-      } else {
-        this.unset();
-      }
-    },
-    autoform: {
-      type: 'hidden',
-      label: false
-    },
-    optional: true
-  },
-  cantonID: {
-    type: String,
-    label: 'Cantón',
-    optional: true,
-    autoform: {
-      type: 'select',
-      firstOption: 'Seleccione un cantón',
-      options: function () {
-        var codigoProvincia = AutoForm.getFieldValue('provinciaID');
-        var cantones = new RegExp('^' + codigoProvincia + '[\\d]{2}$');
-        return DPA.find({codigo: {$regex: cantones}}).map(function (dpa) {
-          return {label: dpa.descripcion, value: dpa.codigo};
-        });
-      }
-    }
-  },
-  cantonNombre: {
-    type: String,
-    autoValue: function () {
-      if (this.isInsert) {
-        let codigoCanton = this.field('cantonID').value;
-        if (codigoCanton)
-          return DPA.findOne({codigo: codigoCanton}).descripcion;
-      } else if (this.isUpsert) {
-        return {$setOnInsert: DPA.findOne({codigo: codigoCanton}).descripcion};
-      } else {
-        this.unset();
-      }
-    },
-    autoform: {
-      type: 'hidden',
-      label: false
-    },
-    optional: true
-  },
-  parroquiaID: {
-    type: String,
-    label: 'Parroquia',
-    optional: true,
-    autoform: {
-      type: 'select',
-      firstOption: 'Seleccione una parroquia',
-      options: function () {
-        $("[name='zona']").change(function() {
-          $("[name='parroquiaID'] option[value!='']").remove();
-        });
-        $("[name='provinciaID']").change(function() {
-          $("[name='parroquiaID'] option[value!='']").remove();
-        });
-        var codigoCanton = AutoForm.getFieldValue('cantonID');
-        var parroquias = new RegExp('^' + codigoCanton + '[\\d]{2}$');
-        return DPA.find({codigo: {$regex: parroquias}}).map(function (dpa) {
-          return {label: dpa.descripcion, value: dpa.codigo};
-        });
-      }
-    }
-  },
-  parroquiaNombre: {
-    type: String,
-    autoValue: function () {
-      if (this.isInsert) {
-        let codigoParroquia = this.field('parroquiaID').value;
-        if (codigoParroquia)
-          return DPA.findOne({codigo: codigoParroquia}).descripcion;
-      } else if (this.isUpsert) {
-        return {$setOnInsert: DPA.findOne({codigo: codigoParroquia}).descripcion};
-      } else {
-        this.unset();
-      }
-    },
-    autoform: {
-      type: 'hidden',
-      label: false
-    },
-    optional: true
-  },
+  /*** DATOS GENERALES ***/
   cedula: {
     type: String,
     label: 'Cédula',
@@ -223,6 +53,25 @@ Productores.attachSchema(new SimpleSchema({
       }
     }
   },
+  tipoProductor: {
+    type: [String],
+    label: 'Tipo de productor',
+    autoform: {
+      type: 'select-checkbox',
+      options: function () {
+        return [
+          {label: 'Agrícola', value: 'Agrícola'},
+          {label: 'Artesano', value: 'Artesano'},
+          {label: 'Cazador', value: 'Cazador'},
+          {label: 'Elaborador de comidas y bebidas', value: 'Elaborador de comidas y bebidas'},
+          {label: 'Pecuario', value: 'Pecuario'},
+          {label: 'Pescador', value: 'Pescador'},
+          {label: 'Procesador', value: 'Procesador'},
+          {label: 'Recolector', value: 'Recolector'}
+        ];
+      }
+    }
+  },
   telefonoFijoContacto: {
     type: String,
     label: 'Teléfono fijo',
@@ -247,7 +96,126 @@ Productores.attachSchema(new SimpleSchema({
     regEx: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
     optional: true
   },
-  organizaciones: {
+  fechaResponsable: {
+    type: FechaResponsableSchema
+  },
+  /*** UBICACIÓN ***/
+  ubicacion: {
+    type: UbicacionSchema
+  },
+  /*** DATOS DE LA FAMILIA ***/
+  numeroPersonasFamilia: {
+    type: Number,
+    label: 'Número de personas que conforman la familia',
+    min: 2
+  },
+  numeroFamiliaresProduccion: {
+    type: Number,
+    label: 'Número de personas de su núcleo familiar que apoyan en las actividades productivas',
+    min: 2
+  },
+  numeroFamiliaresComercializacion: {
+    type: Number,
+    label: 'Número de personas de su núcleo familiar que apoyan en la comercialización',
+    min: 2
+  },
+  /*** SISTEMA PRODUCTIVO ***/
+  propiedadTierra: {
+    type: String,
+    label: 'La mayor cantidad de su tierra es',
+    autoform: {
+      type: 'select-radio',
+      options: function () {
+        return [
+          {label: 'Arrendada', value: 'Arrendada'},
+          {label: 'Al partir', value: 'Al partir'},
+          {label: 'Comunitaria', value: 'Comunitaria'},
+          {label: 'En comodato', value: 'En comodato'},
+          {label: 'Prestada', value: 'Prestada'},
+          {label: 'Propia', value: 'Propia'}
+        ];
+      }
+    }
+  },
+  necesidadesRiego: {
+    type: String,
+    label: 'Sus necesidades de riego están satisfechas de manera',
+    autoform: {
+      type: 'select-radio',
+      options: function () {
+        return [
+          {label: 'Total', value: 'Total'},
+          {label: 'Parcial', value: 'Parcial'},
+          {label: 'Nula', value: 'Nula'}
+        ];
+      }
+    }
+  },
+  numeroProductosCultiva: {
+    type: String,
+    label: 'El número de productos que cultiva es',
+    autoform: {
+      type: 'select-radio',
+      options: function () {
+        return [
+          {label: 'Más de 12', value: 'Más de 12'},
+          {label: 'De 6 hasta 12', value: 'De 6 hasta 12'},
+          {label: 'De 2 a 5', value: 'De 2 a 5'},
+          {label: 'Monocultivo', value: 'Monocultivo'}
+        ];
+      }
+    }
+  },
+  usoAgroquimicos: {
+    type: String,
+    label: 'El uso de agroquímicos en sus cultivos es',
+    autoform: {
+      type: 'select-radio',
+      options: function () {
+        return [
+          {label: 'Regular', value: 'Regular'},
+          {label: 'Eventual', value: 'Eventual'},
+          {label: 'Nulo', value: 'Nulo'}
+        ];
+      }
+    }
+  },
+  parteDeSPG: {
+    type: String,
+    label: 'Forma parte de un Sistema Participativo de Garantía (SPG)',
+    autoform: {
+      type: 'select-radio',
+      options: function () {
+        return [
+          {label: 'Si', value: 'Si'},
+          {label: 'No', value: 'No'}
+        ];
+      }
+    }
+  },
+  /*** DESTINO DE LOS INGRESOS OBTENIDOS EN EL CIALCO ***/
+  destinoIngresos: {
+    type: [String],
+    autoform: {
+      type: 'select-checkbox',
+      label: false,
+      options: function () {
+        return [
+          {label: 'Alimentación', value: 'Alimentación'},
+          {label: 'Arriendo de tierra', value: 'Arriendo de tierra'},
+          {label: 'Educación', value: 'Educación'},
+          {label: 'Pago de deudas', value: 'Pago de deudas'},
+          {label: 'Producción', value: 'Producción'},
+          {label: 'Recreación', value: 'Recreación'},
+          {label: 'Salud', value: 'Salud'},
+          {label: 'Vestimenta', value: 'Vestimenta'},
+          {label: 'Vivienda', value: 'Vivienda'},
+          {label: 'Otros', value: 'Otros'}
+        ];
+      }
+    }
+  },
+  /*organizaciones: {
     type: [String],
     label: 'Organizaciones a las que pertenece',
     optional: true,
@@ -289,16 +257,14 @@ Productores.attachSchema(new SimpleSchema({
         multiple: true
       }
     }
-  },
-  createdAt: {
+  },*/
+  responsable: {
     type: String,
     autoValue: function () {
-      var currentDate = new Date();
-      var date = currentDate.getFullYear() + '-' + ('0' + (currentDate.getMonth() + 1)).slice(-2) + '-' + ('0' + currentDate.getDate()).slice(-2);
       if (this.isInsert) {
-        return date;
+        return Meteor.users.findOne({_id: Meteor.userId()}).profile.name;
       } else if (this.isUpsert) {
-        return {$setOnInsert: date};
+        return {$setOnInsert: Meteor.users.findOne({_id: Meteor.userId()}).profile.name};
       } else {
         this.unset();
       }
@@ -306,7 +272,8 @@ Productores.attachSchema(new SimpleSchema({
     autoform: {
       type: 'hidden',
       label: false
-    }
+    },
+    optional: true
   },
   createdBy: {
     type: String,
@@ -325,13 +292,15 @@ Productores.attachSchema(new SimpleSchema({
     },
     optional: true
   },
-  responsable: {
+  createdAt: {
     type: String,
     autoValue: function () {
+      var currentDate = new Date();
+      var date = currentDate.getFullYear() + '-' + ('0' + (currentDate.getMonth() + 1)).slice(-2) + '-' + ('0' + currentDate.getDate()).slice(-2);
       if (this.isInsert) {
-        return Meteor.users.findOne({_id: Meteor.userId()}).profile.name;
+        return date;
       } else if (this.isUpsert) {
-        return {$setOnInsert: Meteor.users.findOne({_id: Meteor.userId()}).profile.name};
+        return {$setOnInsert: date};
       } else {
         this.unset();
       }
@@ -339,8 +308,7 @@ Productores.attachSchema(new SimpleSchema({
     autoform: {
       type: 'hidden',
       label: false
-    },
-    optional: true
+    }
   }
 }));
 

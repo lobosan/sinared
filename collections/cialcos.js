@@ -11,71 +11,6 @@ let mediosDifusionFrecuencia = [
 
 Cialcos.attachSchema(new SimpleSchema({
   /*** DATOS GENERALES ***/
-  fechaLevantamientoDatos: {
-    type: String,
-    label: 'Fecha de levantamiento de datos',
-    autoform: {
-      afFieldInput: {
-        type: 'bootstrap-datepicker'
-      }
-    }
-  },
-  anio: {
-    optional: true,
-    type: Number,
-    autoValue: function () {
-      if (this.isInsert) {
-        let fechaLevantamientoDatos = this.field('fechaLevantamientoDatos').value;
-        let fecha = fechaLevantamientoDatos.split('-');
-        return Number(fecha[0]);
-      } else if (this.isUpsert) {
-        let fechaLevantamientoDatos = this.field('fechaLevantamientoDatos').value;
-        let fecha = fechaLevantamientoDatos.split('-');
-        return Number(fecha[0]);
-      } else {
-        this.unset();
-      }
-    },
-    autoform: {
-      type: 'hidden',
-      label: false
-    }
-  },
-  cuatrimestre: {
-    optional: true,
-    type: Number,
-    autoValue: function () {
-      if (this.isInsert) {
-        let fechaLevantamientoDatos = this.field('fechaLevantamientoDatos').value;
-        if (fechaLevantamientoDatos) {
-          let fecha = fechaLevantamientoDatos.split('-');
-          let month = fecha[1];
-          if (month >= 1 && month <= 4) return 1;
-          if (month >= 5 && month <= 8) return 2;
-          if (month >= 9 && month <= 12) return 3;
-        }
-      } else if (this.isUpsert) {
-        let fechaLevantamientoDatos = this.field('fechaLevantamientoDatos').value;
-        if (fechaLevantamientoDatos) {
-          let fecha = fechaLevantamientoDatos.split('-');
-          let month = fecha[1];
-          if (month >= 1 && month <= 4) return 1;
-          if (month >= 5 && month <= 8) return 2;
-          if (month >= 9 && month <= 12) return 3;
-        }
-      } else {
-        this.unset();
-      }
-    },
-    autoform: {
-      type: 'hidden',
-      label: false
-    }
-  },
-  nombreLevantadorDatos: {
-    type: String,
-    label: 'Nombre de quien levanta los datos'
-  },
   nombreCialco: {
     type: String,
     label: 'Nombre del CIALCO',
@@ -102,96 +37,6 @@ Cialcos.attachSchema(new SimpleSchema({
       afFieldInput: {
         type: 'bootstrap-datetimepicker'
       }
-    }
-  },
-  /*** TIPO DE CIALCO ***/
-  tipo: {
-    type: String,
-    autoform: {
-      type: 'select-radio',
-      label: false,
-      options: function () {
-        return [
-          {label: 'Abastecimiento a catering', value: 'Abastecimiento a catering'},
-          {label: 'Abastecimiento a MIPYMES', value: 'Abastecimiento a MIPYMES'},
-          {label: 'Abastecimiento a restaurantes locales', value: 'Abastecimiento a restaurantes locales'},
-          {label: 'Abastecimiento a tiendas de barrio', value: 'Abastecimiento a tiendas de barrio'},
-          {label: 'Canasta de entrega dispersa', value: 'Canasta de entrega dispersa'},
-          {label: 'Canasta de entrega en punto único', value: 'Canasta de entrega en punto único'},
-          {label: 'Compra pública directa', value: 'Compra pública directa'},
-          {label: 'Compra pública a través de la UNA-EP (Unidad Nacional de Almacenamiento - Empresa Pública)', value: 'Compra pública a través de la UNA-EP (Unidad Nacional de Almacenamiento - Empresa Pública)'},
-          {label: 'Compra pública a través del SERCOP (Servicio Nacional de Contratación Pública)', value: 'Compra pública a través del SERCOP (Servicio Nacional de Contratación Pública)'},
-          {label: 'Espacio de venta en mercado', value: 'Espacio de venta en mercado'},
-          {label: 'Exportación campesina', value: 'Exportación campesina'},
-          {label: 'Feria de productores', value: 'Feria de productores'},
-          {label: 'Tienda comunitaria o de productores', value: 'Tienda comunitaria o de productores'},
-          {label: 'Turismo comunitario o agroturismo', value: 'Turismo comunitario o agroturismo'},
-          {label: 'Venta directa en finca (pie de finca)', value: 'Venta directa en finca (pie de finca)'},
-          {label: 'Otro', value: 'Otro'}
-        ];
-      }
-    }
-  },
-  /*** UBICACIÓN ***/
-  ubicacion: {
-    type: UbicacionSchema
-  },
-  /*** DATOS DEL REPRESENTANTE ***/
-  cedulaRepresentante: {
-    type: String,
-    label: 'Cédula del representante',
-    regEx: /^[0-9]{10}$/,
-    min: 10,
-    max: 10
-  },
-  nombreRepresentante: {
-    type: String,
-    label: 'Nombre del representante'
-  },
-  telefonoFijoRepresentante: {
-    optional: true,
-    type: String,
-    label: 'Teléfono fijo',
-    regEx: /^0[2-7]{1}-?\d{3}-?\d{4}$/,
-    autoform: {
-      placeholder: '02-000-0000'
-    }
-  },
-  celularRepresentante: {
-    optional: true,
-    type: String,
-    label: 'Teléfono celular',
-    regEx: /^0[8-9]{1}\d{1}-?\d{3}-?\d{4}$/,
-    autoform: {
-      placeholder: '090-000-0000'
-    }
-  },
-  emailRepresentante: {
-    optional: true,
-    type: String,
-    label: 'Correo electrónico',
-    regEx: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
-  },
-  /*** FUNCIONAMIENTO DEL CIALCO ***/
-  hombresCialco: {
-    type: Number,
-    label: 'Número de hombres que participan en el CIALCO',
-    min: 0
-  },
-  mujeresCialco: {
-    type: Number,
-    label: 'Número de mujeres que participan en el CIALCO',
-    min: 0
-  },
-  totalProductoresCialco: {
-    optional: true,
-    type: Number,
-    autoValue: function () {
-      return this.field('hombresCialco').value + this.field('mujeresCialco').value;
-    },
-    autoform: {
-      type: 'hidden',
-      label: false
     }
   },
   reglamento: {
@@ -246,6 +91,83 @@ Cialcos.attachSchema(new SimpleSchema({
       }
     }
   },
+  montoEstimadoVentas: {
+    type: Number,
+    decimal: true,
+    min: 1,
+    label: 'Monto estimado de ventas al mes (USD)'
+  },
+  fechaResponsable: {
+    type: FechaResponsableSchema
+  },
+  /*** TIPO DE CIALCO ***/
+  tipo: {
+    type: String,
+    autoform: {
+      type: 'select-radio',
+      label: false,
+      options: function () {
+        return [
+          {label: 'Abastecimiento a catering', value: 'Abastecimiento a catering'},
+          {label: 'Abastecimiento a MIPYMES', value: 'Abastecimiento a MIPYMES'},
+          {label: 'Abastecimiento a restaurantes locales', value: 'Abastecimiento a restaurantes locales'},
+          {label: 'Abastecimiento a tiendas de barrio', value: 'Abastecimiento a tiendas de barrio'},
+          {label: 'Canasta de entrega dispersa', value: 'Canasta de entrega dispersa'},
+          {label: 'Canasta de entrega en punto único', value: 'Canasta de entrega en punto único'},
+          {label: 'Compra pública directa', value: 'Compra pública directa'},
+          {label: 'Compra pública a través de la UNA-EP (Unidad Nacional de Almacenamiento - Empresa Pública)', value: 'Compra pública a través de la UNA-EP (Unidad Nacional de Almacenamiento - Empresa Pública)'},
+          {label: 'Compra pública a través del SERCOP (Servicio Nacional de Contratación Pública)', value: 'Compra pública a través del SERCOP (Servicio Nacional de Contratación Pública)'},
+          {label: 'Espacio de venta en mercado', value: 'Espacio de venta en mercado'},
+          {label: 'Exportación campesina', value: 'Exportación campesina'},
+          {label: 'Feria de productores', value: 'Feria de productores'},
+          {label: 'Tienda comunitaria o de productores', value: 'Tienda comunitaria o de productores'},
+          {label: 'Turismo comunitario o agroturismo', value: 'Turismo comunitario o agroturismo'},
+          {label: 'Venta directa en finca (pie de finca)', value: 'Venta directa en finca (pie de finca)'},
+          {label: 'Otro', value: 'Otro'}
+        ];
+      }
+    }
+  },
+  /*** UBICACIÓN ***/
+  ubicacion: {
+    type: UbicacionSchema
+  },
+  /*** DATOS DEL REPRESENTANTE ***/
+  /*cedulaRepresentante: {
+    type: String,
+    label: 'Cédula del representante',
+    regEx: /^[0-9]{10}$/,
+    min: 10,
+    max: 10
+  },
+  nombreRepresentante: {
+    type: String,
+    label: 'Nombre del representante'
+  },
+  telefonoFijoRepresentante: {
+    optional: true,
+    type: String,
+    label: 'Teléfono fijo',
+    regEx: /^0[2-7]{1}-?\d{3}-?\d{4}$/,
+    autoform: {
+      placeholder: '02-000-0000'
+    }
+  },
+  celularRepresentante: {
+    optional: true,
+    type: String,
+    label: 'Teléfono celular',
+    regEx: /^0[8-9]{1}\d{1}-?\d{3}-?\d{4}$/,
+    autoform: {
+      placeholder: '090-000-0000'
+    }
+  },
+  emailRepresentante: {
+    optional: true,
+    type: String,
+    label: 'Correo electrónico',
+    regEx: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+  },*/
   /*** PROPIEDAD DEL ESPACIO EN EL QUE FUNCIONA EL CIALCO ***/
   tipoPropiedad: {
     type: String,
@@ -504,7 +426,7 @@ Cialcos.attachSchema(new SimpleSchema({
     }
   },
   /*** ORGANIZACIONES DEL CIALCO ***/
-  numeroOrganizacionesParticipan: {
+  /*numeroOrganizacionesParticipan: {
     type: Number,
     label: 'Número de organizaciones participantes',
     min: 1
@@ -543,7 +465,7 @@ Cialcos.attachSchema(new SimpleSchema({
         'formgroup-class': 'col-md-4'
       }
     }
-  },
+  },*/
   observaciones: {
     optional: true,
     type: String,

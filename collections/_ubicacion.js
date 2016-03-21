@@ -6,7 +6,7 @@ UbicacionSchema = new SimpleSchema({
       type: 'select',
       firstOption: 'Seleccione una zona',
       options: function () {
-        return DPA.find({grupo: 'Zona'}, {sort: {descripcion: 1}}).map(function (dpa) {
+        return DPA.find({grupo: 'Zona'}).map(function (dpa) {
           return {label: dpa.descripcion, value: dpa.codigo};
         });
       }
@@ -40,7 +40,7 @@ UbicacionSchema = new SimpleSchema({
       options: function () {
         var codigoZona = AutoForm.getFieldValue('ubicacion.zonaID');
         var provincias = new RegExp('^' + codigoZona + '[\\d]{2}$');
-        return DPA.find({codigo: {$regex: provincias}}, {sort: {descripcion: 1}}).map(function (dpa) {
+        return DPA.find({codigo: {$regex: provincias}}).map(function (dpa) {
           return {label: dpa.descripcion, value: dpa.codigo};
         });
       }
@@ -74,7 +74,7 @@ UbicacionSchema = new SimpleSchema({
       options: function () {
         var codigoProvincia = AutoForm.getFieldValue('ubicacion.provinciaID');
         var cantones = new RegExp('^' + codigoProvincia + '[\\d]{2}$');
-        return DPA.find({codigo: {$regex: cantones}}, {sort: {descripcion: 1}}).map(function (dpa) {
+        return DPA.find({codigo: {$regex: cantones}}).map(function (dpa) {
           return {label: dpa.descripcion, value: dpa.codigo};
         });
       }
@@ -114,7 +114,7 @@ UbicacionSchema = new SimpleSchema({
         });
         var codigoCanton = AutoForm.getFieldValue('ubicacion.cantonID');
         var parroquias = new RegExp('^' + codigoCanton + '[\\d]{2}$');
-        return DPA.find({codigo: {$regex: parroquias}}, {sort: {descripcion: 1}}).map(function (dpa) {
+        return DPA.find({codigo: {$regex: parroquias}}).map(function (dpa) {
           return {label: dpa.descripcion, value: dpa.codigo};
         });
       }

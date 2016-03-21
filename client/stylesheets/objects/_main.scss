@@ -1811,6 +1811,10 @@ body.login-page .login-footer {
   content: '' !important;
 }
 
+.checkbox > label:after {
+  content: '' !important;
+}
+
 .custom-fieldset {
   border: 1px solid #ccc !important;
   padding: 0 1.4em 1.4em 1.4em !important;

@@ -7,19 +7,8 @@
         <div class="card card-top-buffer">
           <div class="card-body">
             {{#autoForm collection='Productores' id='insertProductorForm' type='insert'}}
-              <div class="row">
-                <div class="col-md-2">{{> afQuickField name='anio'}}</div>
-                <div class="col-md-3">{{> afQuickField name='cuatrimestre'}}</div>
-              </div>
               <fieldset class="custom-fieldset">
-                <legend class="custom-legend">Ubicación</legend>
-                {{> afQuickField name='zonaID'}}
-                {{> afQuickField name='provinciaID'}}
-                {{> afQuickField name='cantonID'}}
-                {{> afQuickField name='parroquiaID'}}
-              </fieldset>
-              <fieldset class="custom-fieldset">
-                <legend class="custom-legend">Datos personales</legend>
+                <legend class="custom-legend">Datos generales</legend>
                 <div class="row">
                   <div class="col-md-2">{{> afQuickField name='cedula'}}</div>
                   <div class="col-md-5">{{> afQuickField name='apellidos'}}</div>
@@ -30,13 +19,40 @@
                   <div class="col-md-2">{{> afQuickField name='sexo'}}</div>
                   <div class="col-md-8">{{> afQuickField name='estadoCivil'}}</div>
                 </div>
+                {{> afQuickField name='tipoProductor'}}
                 <div class="row">
-                  <div class="col-md-4">{{> afQuickField name='telefonoFijoContacto'}}</div>
-                  <div class="col-md-4">{{> afQuickField name='celularContacto'}}</div>
-                  <div class="col-md-4">{{> afQuickField name='emailContacto'}}</div>
+                  <div class="col-sm-3 col-md-4">{{> afQuickField name='telefonoFijoContacto'}}</div>
+                  <div class="col-sm-3 col-md-4">{{> afQuickField name='celularContacto'}}</div>
+                  <div class="col-sm-6 col-md-4">{{> afQuickField name='emailContacto'}}</div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6 col-md-4">{{> afQuickField name='fechaResponsable.fechaLevantamientoDatos' datePickerOptions=datePickerDefaultOptions}}</div>
+                  <div class="col-sm-6 col-md-8">{{> afQuickField name='fechaResponsable.nombreLevantadorDatos'}}</div>
                 </div>
               </fieldset>
-              <div class="input-group select2-bootstrap-append">
+              <fieldset class="custom-fieldset">
+                <legend class="custom-legend">Ubicación del productor</legend>
+                {{> ubicacion}}
+              </fieldset>
+              <fieldset class="custom-fieldset">
+                <legend class="custom-legend">Datos de la familia</legend>
+                {{> afQuickField name='numeroPersonasFamilia'}}
+                {{> afQuickField name='numeroFamiliaresProduccion'}}
+                {{> afQuickField name='numeroFamiliaresComercializacion'}}
+              </fieldset>
+              <fieldset class="custom-fieldset">
+                <legend class="custom-legend">Sistema productivo</legend>
+                {{> afQuickField name='propiedadTierra'}}
+                {{> afQuickField name='necesidadesRiego'}}
+                {{> afQuickField name='numeroProductosCultiva'}}
+                {{> afQuickField name='usoAgroquimicos'}}
+                {{> afQuickField name='parteDeSPG'}}
+              </fieldset>
+              <fieldset class="custom-fieldset">
+                <legend class="custom-legend">Destino de los ingresos obtenidos en el CIALCO</legend>
+                {{> afQuickField name='destinoIngresos'}}
+              </fieldset>
+              <!--<div class="input-group select2-bootstrap-append">
                 {{> afQuickField name='cialcos'}}
                 <span class="input-group-btn s2m-add">
                     <button class="btn btn-default" type="button" data-toggle="modal" data-target="#nuevo-cialco">
@@ -51,7 +67,7 @@
                       <span class="fa fa-plus"></span>
                     </button>
                   </span>
-              </div>
+              </div>-->
               <button type='submit' class='btn btn-success'>GUARDAR</button>
             {{/autoForm}}
           </div>

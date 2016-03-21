@@ -51,7 +51,10 @@
                   <div class="col-sm-6 col-md-3">{{> afQuickField name='twitter'}}</div>
                 </div>
               </fieldset>
-              {{> ubicacion}}
+              <fieldset class="custom-fieldset">
+                <legend class="custom-legend">Ubicación de la organización</legend>
+                {{> ubicacion}}
+              </fieldset>
               <fieldset class="custom-fieldset">
                 <legend class="custom-legend">CIALCOs en los que participa</legend>
                 {{> afQuickField name='cialcosParticipa'}}
