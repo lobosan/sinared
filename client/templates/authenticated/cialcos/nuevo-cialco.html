@@ -31,18 +31,6 @@
                 <legend class="custom-legend">Ubicación del CIALCO</legend>
                 {{> ubicacion}}
               </fieldset>
-              <!--<fieldset class="custom-fieldset">
-                <legend class="custom-legend">Datos del representante del CIALCO</legend>
-                <div class="row">
-                  <div class="col-md-4">{{> afQuickField name='cedulaRepresentante' id='ciaCedulaRepresentante'}}</div>
-                  <div class="col-md-8">{{> afQuickField name='nombreRepresentante' id='ciaNombreRepresentante'}}</div>
-                </div>
-                <div class="row">
-                  <div class="col-md-4">{{> afQuickField name='telefonoFijoRepresentante'}}</div>
-                  <div class="col-md-4">{{> afQuickField name='celularRepresentante'}}</div>
-                  <div class="col-md-4">{{> afQuickField name='emailRepresentante'}}</div>
-                </div>
-              </fieldset>-->
               <fieldset class="custom-fieldset">
                 <legend class="custom-legend">Propiedad del espacio en el que funciona el CIALCO</legend>
                 {{> afQuickField name='tipoPropiedad'}}
@@ -133,11 +121,6 @@
                   </table>
                 </div>
               </fieldset>
-              <!--<fieldset class="custom-fieldset">
-                <legend class="custom-legend">Organizaciones que participan en el CIALCO</legend>
-                {{> afQuickField name='numeroOrganizacionesParticipan'}}
-                {{> afQuickField name='organizacionesCialco'}}
-              </fieldset>-->
               {{> afQuickField name='observaciones'}}
               <button type='submit' class='btn btn-success'>GUARDAR</button>
             {{/autoForm}}

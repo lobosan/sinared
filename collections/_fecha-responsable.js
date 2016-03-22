@@ -13,7 +13,7 @@ FechaResponsableSchema = new SimpleSchema({
     type: Number,
     autoValue: function () {
       if (this.isInsert) {
-        let fechaLevantamientoDatos = this.field('fechaLevantamientoDatos').value;
+        let fechaLevantamientoDatos = this.field('fechaResponsable.fechaLevantamientoDatos').value;
         let fecha = fechaLevantamientoDatos.split('-');
         return Number(fecha[0]);
       } else {
@@ -30,7 +30,7 @@ FechaResponsableSchema = new SimpleSchema({
     type: Number,
     autoValue: function () {
       if (this.isInsert) {
-        let fechaLevantamientoDatos = this.field('fechaLevantamientoDatos').value;
+        let fechaLevantamientoDatos = this.field('fechaResponsable.fechaLevantamientoDatos').value;
         if (fechaLevantamientoDatos) {
           let fecha = fechaLevantamientoDatos.split('-');
           let month = fecha[1];

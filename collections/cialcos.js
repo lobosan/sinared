@@ -132,42 +132,6 @@ Cialcos.attachSchema(new SimpleSchema({
   ubicacion: {
     type: UbicacionSchema
   },
-  /*** DATOS DEL REPRESENTANTE ***/
-  /*cedulaRepresentante: {
-    type: String,
-    label: 'Cédula del representante',
-    regEx: /^[0-9]{10}$/,
-    min: 10,
-    max: 10
-  },
-  nombreRepresentante: {
-    type: String,
-    label: 'Nombre del representante'
-  },
-  telefonoFijoRepresentante: {
-    optional: true,
-    type: String,
-    label: 'Teléfono fijo',
-    regEx: /^0[2-7]{1}-?\d{3}-?\d{4}$/,
-    autoform: {
-      placeholder: '02-000-0000'
-    }
-  },
-  celularRepresentante: {
-    optional: true,
-    type: String,
-    label: 'Teléfono celular',
-    regEx: /^0[8-9]{1}\d{1}-?\d{3}-?\d{4}$/,
-    autoform: {
-      placeholder: '090-000-0000'
-    }
-  },
-  emailRepresentante: {
-    optional: true,
-    type: String,
-    label: 'Correo electrónico',
-    regEx: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
-  },*/
   /*** PROPIEDAD DEL ESPACIO EN EL QUE FUNCIONA EL CIALCO ***/
   tipoPropiedad: {
     type: String,
@@ -260,19 +224,6 @@ Cialcos.attachSchema(new SimpleSchema({
       }
     }
   },
-  /*estado: {
-   type: String,
-   label: 'Estado',
-   autoform: {
-   type: 'select-radio-inline',
-   options: function () {
-   return [
-   {label: 'Nuevo', value: 'Nuevo'},
-   {label: 'Fortalecido', value: 'Fortalecido'}
-   ];
-   }
-   }
-   },*/
   /*** MEDIOS TRADICIONALES DE DIFUSIÓN ***/
   volantesFrecuencia: {
     optional: true,
@@ -408,7 +359,6 @@ Cialcos.attachSchema(new SimpleSchema({
   twitterFrecuencia: {
     optional: true,
     type: String,
-    regEx: /@([A-Za-z0-9_]+)/,
     autoform: {
       type: 'select',
       label: false,
@@ -421,51 +371,11 @@ Cialcos.attachSchema(new SimpleSchema({
   twitter: {
     optional: true,
     type: String,
+    regEx: /@([A-Za-z0-9_]+)/,
     autoform: {
       label: false
     }
   },
-  /*** ORGANIZACIONES DEL CIALCO ***/
-  /*numeroOrganizacionesParticipan: {
-    type: Number,
-    label: 'Número de organizaciones participantes',
-    min: 1
-  },
-  organizacionesCialco: {
-    optional: true,
-    type: [Object],
-    label: 'Organizaciones',
-    minCount: 1
-  },
-  'organizacionesCialco.$.nombre': {
-    type: String,
-    label: 'Nombre de la organización',
-    autoform: {
-      afFormGroup: {
-        'formgroup-class': 'col-md-4'
-      }
-    }
-  },
-  'organizacionesCialco.$.representante': {
-    optional: true,
-    type: String,
-    label: 'Nombre del representante',
-    autoform: {
-      afFormGroup: {
-        'formgroup-class': 'col-md-4'
-      }
-    }
-  },
-  'organizacionesCialco.$.datoContacto': {
-    optional: true,
-    type: String,
-    label: 'Dato de contacto',
-    autoform: {
-      afFormGroup: {
-        'formgroup-class': 'col-md-4'
-      }
-    }
-  },*/
   observaciones: {
     optional: true,
     type: String,

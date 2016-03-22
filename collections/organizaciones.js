@@ -10,14 +10,12 @@ Organizaciones.attachSchema(new SimpleSchema({
     unique: true
   },
   ruc: {
-    optional: true,
     type: Number,
     label: 'RUC de la organización',
     index: true,
     unique: true,
     regEx: /^[0-9]{13}$/,
-    min: 13,
-    max: 13
+    optional: true
   },
   acreditacionMagap: {
     optional: true,
@@ -62,20 +60,13 @@ Organizaciones.attachSchema(new SimpleSchema({
     }
   },
   hombresOrganizacion: {
-    optional: true,
     type: Number,
     label: 'Número de hombres en la organización',
     min: 0
   },
   mujeresOrganizacion: {
-    optional: true,
     type: Number,
     label: 'Número de mujeres en la organización',
-    min: 0
-  },
-  totalProductoresOrganizacion: {
-    type: Number,
-    label: 'Total de productores en la organización',
     min: 0
   },
   transportePropio: {

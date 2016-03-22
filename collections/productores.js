@@ -1,4 +1,5 @@
 Productores = new Meteor.Collection('productores');
+SubsManagerProductores = new SubsManager();
 
 Productores.attachSchema(new SimpleSchema({
   /*** DATOS GENERALES ***/

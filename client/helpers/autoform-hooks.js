@@ -14,29 +14,15 @@ AutoForm.addHooks([
   'insertProductorForm',
   'insertMontoVentaForm',
   'insertMetasForm',
-  'insertRespaldoForm'
+  'insertRespaldoForm',
+  'insertCialcoIntegrantesForm'
 ], hooksObject);
 
-AutoForm.hooks({
-  insertOrganizacionForm: {
-    before: {
-      insert: function (doc) {
-        if (doc.telefonoFijo1 === undefined && doc.celular1 === undefined && doc.email === undefined) {
-          Bert.alert('Al menos un dato de contacto es requerido', 'warning');
-          return false;
-        } else {
-          return doc;
-        }
-      }
-    }
-  }
-});
-
-AutoForm.addHooks(['insertCialcoForm', 'insertRedForm'], {
+AutoForm.addHooks(['insertOrganizacionForm', 'insertRedForm'], {
   before: {
     insert: function (doc) {
       if (doc.telefonoFijoRepresentante === undefined && doc.celularRepresentante === undefined && doc.emailRepresentante === undefined) {
-        Bert.alert('Ingrese al menos un dato de contacto para el representante del CIALCO', 'warning');
+        Bert.alert('Ingrese al menos un dato de contacto para el representante', 'warning');
         return false;
       } else {
         return doc;

@@ -1,7 +1,5 @@
 <template name="nuevoProductor">
   {{#if Template.subscriptionsReady}}
-    {{> modalCialco}}
-    {{> modalOrganizacion}}
     <div class="row animated fadeIn">
       <div class="col-xs-12">
         <div class="card card-top-buffer">
@@ -52,22 +50,6 @@
                 <legend class="custom-legend">Destino de los ingresos obtenidos en el CIALCO</legend>
                 {{> afQuickField name='destinoIngresos'}}
               </fieldset>
-              <!--<div class="input-group select2-bootstrap-append">
-                {{> afQuickField name='cialcos'}}
-                <span class="input-group-btn s2m-add">
-                    <button class="btn btn-default" type="button" data-toggle="modal" data-target="#nuevo-cialco">
-                      <span class="fa fa-plus"></span>
-                    </button>
-                  </span>
-              </div>
-              <div class="input-group select2-bootstrap-append">
-                {{> afQuickField name='organizaciones'}}
-                <span class="input-group-btn s2m-add">
-                    <button class="btn btn-default" type="button" data-toggle="modal" data-target="#nueva-organizacion">
-                      <span class="fa fa-plus"></span>
-                    </button>
-                  </span>
-              </div>-->
               <button type='submit' class='btn btn-success'>GUARDAR</button>
             {{/autoForm}}
           </div>

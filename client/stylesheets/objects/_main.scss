@@ -1850,7 +1850,7 @@ label {
   top: -10px;
 }
 
-.select2-container--default .select2-selection--multiple {
+.select2-container--default .select2-selection--multiple, .select2-container--default .select2-selection--single {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
@@ -1964,4 +1964,8 @@ label {
 
 .cialco-item-estado th:nth-child(3), .cialco-item-estado td:nth-child(3) {
   padding-left: 35px !important;
+}
+
+.bootstrap-datetimepicker-widget {
+  z-index: 999999 !important;
 }

@@ -6,52 +6,13 @@
       <div class="col-xs-12">
         <div class="card card-top-buffer">
           <div class="card-body">
-            {{#autoForm collection='Redes' id='insertRedForm' type='insert'}}
+            {{#autoForm collection='CialcoIntegrantes' id='insertCialcoIntegrantesForm' type='insert'}}
               <div class="row">
-                <div class="col-md-2">{{> afQuickField name='periodo.0.anio'}}</div>
-                <div class="col-md-3">{{> afQuickField name='periodo.0.cuatrimestre'}}</div>
+                <div class="col-md-12">{{> afQuickField name='cialcoId'}}</div>
+                <div class="col-md-6">{{> afQuickField name='productorCedula'}}</div>
+                <div class="col-md-6">{{> afQuickField name='representanteCialco'}}</div>
+                <div class="col-md-12">{{> afQuickField name='organizacionId'}}</div>
               </div>
-              <fieldset class="custom-fieldset">
-                <legend class="custom-legend">Ubicación</legend>
-                {{> afQuickField name='zonaID'}}
-                {{> afQuickField name='provinciaID'}}
-                {{> afQuickField name='cantonID'}}
-                {{> afQuickField name='parroquiaID'}}
-              </fieldset>
-              <fieldset class="custom-fieldset">
-                <legend class="custom-legend">Datos de la red</legend>
-                {{> afQuickField name='nombreRed'}}
-                {{> afQuickField name='estado'}}
-                <div class="input-group select2-bootstrap-append">
-                  {{> afQuickField name='cialcos'}}
-                  <span class="input-group-btn s2m-add">
-                    <button class="btn btn-default" type="button" data-toggle="modal" data-target="#nuevo-cialco">
-                      <span class="fa fa-plus"></span>
-                    </button>
-                  </span>
-                </div>
-                <div class="input-group select2-bootstrap-append">
-                  {{> afQuickField name='organizaciones'}}
-                  <span class="input-group-btn s2m-add">
-                    <button class="btn btn-default" type="button" data-toggle="modal" data-target="#nueva-organizacion">
-                      <span class="fa fa-plus"></span>
-                    </button>
-                  </span>
-                </div>
-              </fieldset>
-              <fieldset class="custom-fieldset">
-                <legend class="custom-legend">Datos del representante de la red</legend>
-                <div class="row">
-                  <div class="col-md-4">{{> afQuickField name='cedulaRepresentante' id='redCedulaRepresentante'}}</div>
-                  <div class="col-md-8">{{> afQuickField name='nombreRepresentante' id='redNombreRepresentante'}}</div>
-                </div>
-                <div class="row">
-                  <div class="col-md-4">{{> afQuickField name='telefonoFijoRepresentante'}}</div>
-                  <div class="col-md-4">{{> afQuickField name='celularRepresentante'}}</div>
-                  <div class="col-md-4">{{> afQuickField name='emailRepresentante'}}</div>
-                </div>
-              </fieldset>
-              {{> afQuickField name='observaciones'}}
               <button type='submit' class='btn btn-success'>GUARDAR</button>
             {{/autoForm}}
           </div>
