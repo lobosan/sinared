@@ -14,8 +14,12 @@ FechaResponsableSchema = new SimpleSchema({
     autoValue: function () {
       if (this.isInsert) {
         let fechaLevantamientoDatos = this.field('fechaResponsable.fechaLevantamientoDatos').value;
-        let fecha = fechaLevantamientoDatos.split('-');
-        return Number(fecha[0]);
+        if (fechaLevantamientoDatos) {
+          let fecha = fechaLevantamientoDatos.split('-');
+          return Number(fecha[0]);
+        } else {
+         return;
+        }
       } else {
         this.unset();
       }

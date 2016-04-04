@@ -66,6 +66,7 @@ UbicacionSchema = new SimpleSchema({
     }
   },
   cantonID: {
+    optional: true,
     type: String,
     label: 'Cantón',
     autoform: {
@@ -100,6 +101,7 @@ UbicacionSchema = new SimpleSchema({
     }
   },
   parroquiaID: {
+    optional: true,
     type: String,
     label: 'Parroquia',
     autoform: {
@@ -140,10 +142,12 @@ UbicacionSchema = new SimpleSchema({
     }
   },
   sectorComunidad: {
+    optional: true,
     type: String,
     label: 'Sector o comunidad'
   },
   puntoReferencia: {
+    optional: true,
     type: String,
     label: 'Punto de referencia'
   },

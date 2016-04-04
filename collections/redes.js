@@ -338,6 +338,8 @@ Redes.attachSchema(new SimpleSchema({
 TabularTables.Redes = new Tabular.Table({
   name: "Lista de redes",
   collection: Redes,
+  responsive: true,
+  autoWidth: false,
   columns: [
     {data: "periodo.0.anio", title: "Año"},
     {data: "periodo.0.cuatrimestre", title: "Cuatrimestre"},

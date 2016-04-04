@@ -3,7 +3,12 @@ let hooksObject = {
     Bert.alert('Información guardada exitosamente', 'success');
   },
   onError: function (formType, error) {
-    Bert.alert('No se guardó la información, revise sus datos', 'warning');
+    if (error.reason && error.reason.indexOf('meteor.cialco-integrantes.$cialcoId_1_productorCedula_1') > -1) {
+      Bert.alert('El productor ya está vinculado al CIALCO', 'warning');
+    } else if (error) {
+      Bert.alert(`No se guardó la información, revise sus datos.
+      ${error}`, 'warning');
+    }
   }
 };
 

@@ -316,6 +316,8 @@ Productores.attachSchema(new SimpleSchema({
 TabularTables.Productores = new Tabular.Table({
   name: 'Lista de productores',
   collection: Productores,
+  responsive: true,
+  autoWidth: false,
   columns: [
     {data: 'anio', title: 'Año'},
     {data: 'cuatrimestre', title: 'Cuatrimestre'},

@@ -347,6 +347,8 @@ Organizaciones.attachSchema(new SimpleSchema({
 TabularTables.Organizaciones = new Tabular.Table({
   name: "Lista de organizaciones",
   collection: Organizaciones,
+  responsive: true,
+  autoWidth: false,
   columns: [
     {data: "periodo.0.anio", title: "Año"},
     {data: "periodo.0.cuatrimestre", title: "Cuatrimestre"},

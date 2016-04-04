@@ -5,8 +5,8 @@ aldeed:autoform@5.8.1
 aldeed:autoform-bs-datepicker@1.1.1
 aldeed:autoform-bs-datetimepicker@1.0.6
 aldeed:autoform-select2@2.0.2
-aldeed:collection2@2.9.0
-aldeed:collection2-core@1.1.0
+aldeed:collection2@2.9.1
+aldeed:collection2-core@1.1.1
 aldeed:schema-deny@1.0.1
 aldeed:schema-index@1.0.1
 aldeed:simple-schema@1.5.3
@@ -89,7 +89,7 @@ meteorhacks:meteorx@1.4.1
 meteorhacks:npm@1.5.0
 meteorhacks:picker@1.0.3
 meteorhacks:ssr@2.2.0
-meteorhacks:subs-manager@1.6.3
+meteorhacks:subs-manager@1.6.4
 meteorhacks:unblock@1.1.0
 meteorspark:util@0.2.0
 meteortoys:toykit@2.2.1

@@ -212,6 +212,8 @@ MontosVenta.attachSchema(new SimpleSchema({
 TabularTables.MontosVenta = new Tabular.Table({
   name: "Lista de montos de venta",
   collection: MontosVenta,
+  responsive: true,
+  autoWidth: false,
   columns: [
     {data: "anio", title: "Año"},
     {data: "semestre", title: "Semestre"},

@@ -1,6 +1,10 @@
 CialcoIntegrantes = new Meteor.Collection('cialco-integrantes');
 SubsManagerCialcoIntegrantes = new SubsManager();
 
+if (Meteor.isServer) {
+  CialcoIntegrantes._ensureIndex({cialcoId: 1, productorCedula: 1}, {unique: 1});
+}
+
 CialcoIntegrantes.attachSchema(new SimpleSchema({
   cialcoId: {
     type: String,
@@ -61,7 +65,6 @@ CialcoIntegrantes.attachSchema(new SimpleSchema({
     }
   },
   representanteCialco: {
-    optional: true,
     type: String,
     label: 'El productor es representante del CIALCO',
     autoform: {
@@ -74,6 +77,108 @@ CialcoIntegrantes.attachSchema(new SimpleSchema({
         ];
       }
     }
+  },
+  cialcoNombre: {
+    optional: true,
+    type: String,
+    autoValue: function () {
+      if (this.isInsert) {
+        let cialcoId = this.field('cialcoId').value;
+        if (cialcoId)
+          return Cialcos.findOne({_id: cialcoId}).nombreCialco;
+      } else if (this.isUpsert) {
+        return {
+          $setOnInsert: Cialcos.findOne({_id: cialcoId}).nombreCialco
+        };
+      } else {
+        this.unset();
+      }
+    }
+  },
+  cialcoTipo: {
+    optional: true,
+    type: String,
+    autoValue: function () {
+      if (this.isInsert) {
+        let cialcoId = this.field('cialcoId').value;
+        if (cialcoId)
+          return Cialcos.findOne({_id: cialcoId}).tipo;
+      } else if (this.isUpsert) {
+        return {
+          $setOnInsert: Cialcos.findOne({_id: cialcoId}).tipo
+        };
+      } else {
+        this.unset();
+      }
+    }
+  },
+  cialcoProvincia: {
+    optional: true,
+    type: String,
+    autoValue: function () {
+      if (this.isInsert) {
+        let cialcoId = this.field('cialcoId').value;
+        if (cialcoId)
+          return Cialcos.findOne({_id: cialcoId}).ubicacion.provinciaNombre;
+      } else if (this.isUpsert) {
+        return {
+          $setOnInsert: Cialcos.findOne({_id: cialcoId}).ubicacion.provinciaNombre
+        };
+      } else {
+        this.unset();
+      }
+    }
+  },
+  productorNombre: {
+    optional: true,
+    type: String,
+    autoValue: function () {
+      if (this.isInsert) {
+        let productorCedula = this.field('productorCedula').value;
+        if (productorCedula)
+          return `${Productores.findOne({cedula: productorCedula}).apellidos} ${Productores.findOne({cedula: productorCedula}).nombres}`;
+      } else if (this.isUpsert) {
+        return {
+          $setOnInsert: `${Productores.findOne({cedula: productorCedula}).apellidos} ${Productores.findOne({cedula: productorCedula}).nombres}`
+        };
+      } else {
+        this.unset();
+      }
+    }
+  },
+  productorSexo: {
+    optional: true,
+    type: String,
+    autoValue: function () {
+      if (this.isInsert) {
+        let productorCedula = this.field('productorCedula').value;
+        if (productorCedula)
+          return Productores.findOne({cedula: productorCedula}).sexo;
+      } else if (this.isUpsert) {
+        return {
+          $setOnInsert: Productores.findOne({cedula: productorCedula}).sexo
+        };
+      } else {
+        this.unset();
+      }
+    }
+  },
+  organizacionNombre: {
+    optional: true,
+    type: String,
+    autoValue: function () {
+      if (this.isInsert) {
+        let organizacionId = this.field('organizacionId').value;
+        if (organizacionId)
+          return Organizaciones.findOne({_id: organizacionId}).nombreOrganizacion;
+      } else if (this.isUpsert) {
+        return {
+          $setOnInsert: Organizaciones.findOne({_id: organizacionId}).nombreOrganizacion
+        };
+      } else {
+        this.unset();
+      }
+    }
   }
 }));
 
@@ -81,26 +186,16 @@ TabularTables.CialcoIntegrantes = new Tabular.Table({
   name: 'Lista de integrantes de CIALCOs',
   collection: CialcoIntegrantes,
   pub: 'tabular_CialcoIntegrantes',
+  responsive: true,
+  autoWidth: false,
   columns: [
-    {data: 'cialcoId', title: 'CIALCO ID'},
-    {data: 'nombreCialco()', title: 'CIALCO'},
-    {data: 'tipoCialco()', title: 'Tipo de CIALCO'},
-    {data: 'provinciaCialco()', title: 'Provincia del CIALCO'},
+    {data: 'cialcoNombre', title: 'CIALCO'},
+    {data: 'cialcoTipo', title: 'Tipo de CIALCO'},
+    {data: 'cialcoProvincia', title: 'Provincia del CIALCO'},
     {data: 'productorCedula', title: 'Cédula del productor'},
-    {data: 'nombreProductor()', title: 'Productor'},
-    {data: 'sexoProductor()', title: 'Sexo'},
+    {data: 'productorNombre', title: 'Productor'},
+    {data: 'productorSexo', title: 'Sexo'},
     {data: 'representanteCialco', title: 'Representante CIALCO'},
-    {data: 'organizacionId', title: 'Organización'}
-  ],
-  columnDefs: [
-    {targets: [0], visible: false, searchable: false},
-    {targets: [1], visible: true, searchable: true, sortable: true},
-    {targets: [2], visible: true, searchable: true, sortable: true},
-    {targets: [3], visible: true, searchable: true, sortable: true},
-    {targets: [4], visible: false, searchable: false},
-    {targets: [5], visible: true, searchable: true, sortable: true},
-    {targets: [6], visible: true, searchable: true, sortable: true},
-    {targets: [7], visible: true, searchable: true, sortable: true}/*,
-    {targets: [8], visible: true, searchable: true, sortable: true}*/
+    {data: 'organizacionNombre', title: 'Organización'}
   ]
 });

@@ -53,8 +53,8 @@ natestrauser:animate-css
 aldeed:template-extension
 highcharts:highcharts-meteor
 highcharts-container
-tsega:bootstrap3-datetimepicker@=3.1.3_3
 aldeed:autoform-bs-datetimepicker
 reywood:publish-composite
 meteorhacks:unblock
 dburles:collection-helpers
+tsega:bootstrap3-datetimepicker@=3.1.3_3

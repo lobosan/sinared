@@ -178,6 +178,8 @@ Respaldos.attachSchema(new SimpleSchema({
 TabularTables.Respaldos = new Tabular.Table({
   name: "Lista de respaldos",
   collection: Respaldos,
+  responsive: true,
+  autoWidth: false,
   columns: [
     {data: "zonaNombre", title: "Zona"},
     {data: "provinciaNombre", title: "Provincia"},

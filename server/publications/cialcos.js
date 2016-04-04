@@ -1,5 +1,5 @@
 Meteor.publish('cialcos', function () {
-  return Cialcos.find({}, {fields: {nombreCialco: 1}});
+  return Cialcos.find({}, {fields: {nombreCialco: 1, ubicacion: 1}});
 });
 
 Meteor.publish('reporteCialcos', function () {

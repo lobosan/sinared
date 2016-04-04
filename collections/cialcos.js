@@ -18,10 +18,12 @@ Cialcos.attachSchema(new SimpleSchema({
     unique: true
   },
   diasFuncionamiento: {
+    optional: true,
     type: String,
     label: 'Días de funcionamiento'
   },
   horaInicio: {
+    optional: true,
     type: String,
     label: 'Hora de inicio',
     autoform: {
@@ -31,6 +33,7 @@ Cialcos.attachSchema(new SimpleSchema({
     }
   },
   horaFin: {
+    optional: true,
     type: String,
     label: 'Hora de cierre',
     autoform: {
@@ -40,6 +43,7 @@ Cialcos.attachSchema(new SimpleSchema({
     }
   },
   reglamento: {
+    optional: true,
     type: String,
     label: 'Tiene reglamento',
     autoform: {
@@ -53,6 +57,7 @@ Cialcos.attachSchema(new SimpleSchema({
     }
   },
   directiva: {
+    optional: true,
     type: String,
     label: 'Existe directiva',
     autoform: {
@@ -66,6 +71,7 @@ Cialcos.attachSchema(new SimpleSchema({
     }
   },
   registroVentasProductor: {
+    optional: true,
     type: String,
     label: 'Tiene registro de ventas por productor',
     autoform: {
@@ -79,6 +85,7 @@ Cialcos.attachSchema(new SimpleSchema({
     }
   },
   sistemaVeedurias: {
+    optional: true,
     type: String,
     label: 'Cuenta con algún sistema de veeduría (SPG, SIC, cualquier otro)',
     autoform: {
@@ -92,6 +99,7 @@ Cialcos.attachSchema(new SimpleSchema({
     }
   },
   montoEstimadoVentas: {
+    optional: true,
     type: Number,
     decimal: true,
     min: 1,
@@ -130,10 +138,12 @@ Cialcos.attachSchema(new SimpleSchema({
   },
   /*** UBICACIÓN ***/
   ubicacion: {
+    optional: true,
     type: UbicacionSchema
   },
   /*** PROPIEDAD DEL ESPACIO EN EL QUE FUNCIONA EL CIALCO ***/
   tipoPropiedad: {
+    optional: true,
     type: String,
     label: 'Tipo de propiedad o uso del espacio',
     autoform: {
@@ -152,6 +162,7 @@ Cialcos.attachSchema(new SimpleSchema({
     }
   },
   documentoPropiedad: {
+    optional: true,
     type: String,
     label: 'Documento de propiedad o uso del espacio',
     autoform: {
@@ -188,10 +199,12 @@ Cialcos.attachSchema(new SimpleSchema({
   },
   /*** INFRAESTRUCTURA ***/
   infraestructura: {
+    optional: true,
     type: InfraestructuraSchema
   },
   /*** EQUIPAMIENTO CON EL QUE CUENTA ***/
   equipamiento: {
+    optional: true,
     type: EquipamientoSchema
   },
   /*** TIPOS DE PRODUCTOS QUE SE COMERCIALIZAN ***/
@@ -441,6 +454,8 @@ Cialcos.attachSchema(new SimpleSchema({
 TabularTables.Cialcos = new Tabular.Table({
   name: 'Lista de cialcos',
   collection: Cialcos,
+  responsive: true,
+  autoWidth: false,
   columns: [
     {data: 'periodo.0.anio', title: 'Año'},
     {data: 'periodo.0.cuatrimestre', title: 'Cuatrimestre'},
