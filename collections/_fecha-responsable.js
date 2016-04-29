@@ -1,5 +1,6 @@
 FechaResponsableSchema = new SimpleSchema({
   fechaLevantamientoDatos: {
+    optional: true,
     type: String,
     label: 'Fecha de levantamiento de datos',
     autoform: {
@@ -52,6 +53,7 @@ FechaResponsableSchema = new SimpleSchema({
     }
   },
   nombreLevantadorDatos: {
+    optional: true,
     type: String,
     label: 'Nombre de quien levanta los datos'
   }
