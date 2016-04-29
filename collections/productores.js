@@ -13,19 +13,23 @@ Productores.attachSchema(new SimpleSchema({
     max: 10
   },
   apellidos: {
+    optional: true,
     type: String,
     label: 'Apellidos'
   },
   nombres: {
+    optional: true,
     type: String,
     label: 'Nombres'
   },
   edad: {
+    optional: true,
     type: Number,
     label: 'Edad',
     min: 1
   },
   sexo: {
+    optional: true,
     type: String,
     label: 'Sexo',
     autoform: {
@@ -39,6 +43,7 @@ Productores.attachSchema(new SimpleSchema({
     }
   },
   estadoCivil: {
+    optional: true,
     type: String,
     label: 'Estado civil',
     autoform: {
@@ -55,6 +60,7 @@ Productores.attachSchema(new SimpleSchema({
     }
   },
   tipoProductor: {
+    optional: true,
     type: [String],
     label: 'Tipo de productor',
     autoform: {
@@ -74,54 +80,60 @@ Productores.attachSchema(new SimpleSchema({
     }
   },
   telefonoFijoContacto: {
+    optional: true,
     type: String,
     label: 'Teléfono fijo',
     regEx: /^0[2-7]{1}-?\d{3}-?\d{4}$/,
     autoform: {
       placeholder: '02-000-0000'
-    },
-    optional: true
+    }
   },
   celularContacto: {
+    optional: true,
     type: String,
     label: 'Teléfono celular',
     regEx: /^0[8-9]{1}\d{1}-?\d{3}-?\d{4}$/,
     autoform: {
       placeholder: '090-000-0000'
-    },
-    optional: true
+    }
   },
   emailContacto: {
+    optional: true,
     type: String,
     label: 'Correo electrónico',
-    regEx: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
-    optional: true
+    regEx: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
   },
   fechaResponsable: {
+    optional: true,
     type: FechaResponsableSchema
   },
   /*** UBICACIÓN ***/
   ubicacion: {
+    optional: true,
     type: UbicacionSchema
   },
   /*** DATOS DE LA FAMILIA ***/
   numeroPersonasFamilia: {
+    optional: true,
     type: Number,
     label: 'Número de personas que conforman la familia',
     min: 2
   },
   numeroFamiliaresProduccion: {
+    optional: true,
     type: Number,
     label: 'Número de personas de su núcleo familiar que apoyan en las actividades productivas',
     min: 2
   },
   numeroFamiliaresComercializacion: {
+    optional: true,
     type: Number,
     label: 'Número de personas de su núcleo familiar que apoyan en la comercialización',
     min: 2
   },
   /*** SISTEMA PRODUCTIVO ***/
   propiedadTierra: {
+    optional: true,
     type: String,
     label: 'La mayor cantidad de su tierra es',
     autoform: {
@@ -139,6 +151,7 @@ Productores.attachSchema(new SimpleSchema({
     }
   },
   necesidadesRiego: {
+    optional: true,
     type: String,
     label: 'Sus necesidades de riego están satisfechas de manera',
     autoform: {
@@ -153,6 +166,7 @@ Productores.attachSchema(new SimpleSchema({
     }
   },
   numeroProductosCultiva: {
+    optional: true,
     type: String,
     label: 'El número de productos que cultiva es',
     autoform: {
@@ -168,6 +182,7 @@ Productores.attachSchema(new SimpleSchema({
     }
   },
   usoAgroquimicos: {
+    optional: true,
     type: String,
     label: 'El uso de agroquímicos en sus cultivos es',
     autoform: {
@@ -182,6 +197,7 @@ Productores.attachSchema(new SimpleSchema({
     }
   },
   parteDeSPG: {
+    optional: true,
     type: String,
     label: 'Forma parte de un Sistema Participativo de Garantía (SPG)',
     autoform: {
@@ -196,6 +212,7 @@ Productores.attachSchema(new SimpleSchema({
   },
   /*** DESTINO DE LOS INGRESOS OBTENIDOS EN EL CIALCO ***/
   destinoIngresos: {
+    optional: true,
     type: [String],
     autoform: {
       type: 'select-checkbox',
@@ -216,50 +233,8 @@ Productores.attachSchema(new SimpleSchema({
       }
     }
   },
-  /*organizaciones: {
-    type: [String],
-    label: 'Organizaciones a las que pertenece',
-    optional: true,
-    autoform: {
-      type: 'select2',
-      options: function () {
-        return Organizaciones.find().map(function (organizacion) {
-          return {label: organizacion.nombreOrganizacion, value: organizacion._id};
-        });
-      },
-      select2Options: function () {
-        return {
-          placeholder: 'Seleccione una o varias',
-          allowClear: true
-        };
-      },
-      afFieldInput: {
-        multiple: true
-      }
-    }
-  },
-  cialcos: {
-    type: [String],
-    label: 'CIALCOs en los que participa',
-    autoform: {
-      type: 'select2',
-      options: function () {
-        return Cialcos.find().map(function (cialco) {
-          return {label: cialco.nombreCialco, value: cialco._id};
-        });
-      },
-      select2Options: function () {
-        return {
-          placeholder: 'Seleccione uno o varios',
-          allowClear: true
-        };
-      },
-      afFieldInput: {
-        multiple: true
-      }
-    }
-  },*/
   responsable: {
+    optional: true,
     type: String,
     autoValue: function () {
       if (this.isInsert) {
@@ -273,8 +248,7 @@ Productores.attachSchema(new SimpleSchema({
     autoform: {
       type: 'hidden',
       label: false
-    },
-    optional: true
+    }
   },
   createdBy: {
     type: String,

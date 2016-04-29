@@ -1,5 +1,6 @@
 UbicacionSchema = new SimpleSchema({
   zonaID: {
+    optional: true,
     type: String,
     label: 'Zona',
     autoform: {
@@ -32,6 +33,7 @@ UbicacionSchema = new SimpleSchema({
     }
   },
   provinciaID: {
+    optional: true,
     type: String,
     label: 'Provincia',
     autoform: {
